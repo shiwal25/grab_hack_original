@@ -16,7 +16,7 @@ warnings.filterwarnings("ignore", category=DeprecationWarning)
 
 load_dotenv() 
 Google_api = os.getenv("GOOGLE_API_KEY")  #gemini api key lene k liye 
-user_scenario_input = ""
+user_input = ""
 recipient_reply = ""
 curr_lat = None
 curr_lng = None
@@ -33,7 +33,7 @@ async def geocode_osm(address: str) -> tuple[float, float]:
                 lng = float(results[0]['lon'])
                 return lat, lng
             else:
-                raise ValueError(f"We are unable to convert given: {address} to latitude and longitude form. No results found.")
+                raise ValueError(f"We are unable to convert given: {address} to latitude and longitude form.")
 
 
 async def find_nearby_lockers(lat: float, lng: float, radius: int = 2000) -> list[dict]:
@@ -59,17 +59,18 @@ async def find_nearby_lockers(lat: float, lng: float, radius: int = 2000) -> lis
                     print("No lockers found within 16 km radius, so do you want to proceed with safe drop off or returning the parcel")
                     ans = input("Enter Yes to proceed with safe drop off or No to return the parcel: ").strip().lower()
                     if ans == 'yes':
-                        return await perform_safe_drop_off()
+                        return await suggest_safe_drop_off()
                     else:
                         return await return_parcel()
                     
                 else:
+                    await asyncio.sleep(3)
                     return await find_nearby_lockers(lat, lng, r*2)
 
 
 
-def haversine(lat1: float, lon1: float, lat2: float, lon2: float) -> float:
-    R = 6371  # Earth radius in km
+def cal_distance(lat1: float, lon1: float, lat2: float, lon2: float) -> float: #this calculate the distance b/w 2 locations(lat,long)
+    R = 6371  
     dlat = radians(lat2 - lat1)
     dlon = radians(lon2 - lon1)
     a = sin(dlat / 2) ** 2 + cos(radians(lat1)) * cos(radians(lat2)) * sin(dlon / 2) ** 2
@@ -80,7 +81,7 @@ def haversine(lat1: float, lon1: float, lat2: float, lon2: float) -> float:
 
 async def contact_recipient_via_chat(message: str) -> str:
 
-    global user_scenario_input, recipient_reply
+    global user_input, recipient_reply
     print(f"{message}")
 
     recipient_reply = ""
@@ -96,15 +97,34 @@ async def contact_recipient_via_chat(message: str) -> str:
     return recipient_reply
 
 
-async def perform_safe_drop_off(_input: str = "") -> str:
+async def suggest_safe_drop_off(_input: str = "") -> str:
     # I am asking for his preference here 
     name = await contact_recipient_via_chat("Please provide the name of the person I can leave the package with:")
     if name == "Recipient is not replying":
+        print("Recipient did not respond. So we have regretfully return the parcel")
         return "Recipient did not respond. Cannot proceed with safe drop-off."
 
+    # ... (inside suggest_safe_drop_off)
     phone = await contact_recipient_via_chat("Please provide the phone number of that person:")
     if phone == "Recipient is not replying":
         return "Recipient did not respond. Cannot proceed with safe drop-off."
+
+    # Logic for OTP verification
+    otp = str(random.randint(1000, 9999))
+    otp_message = f"An OTP has been sent to the provided phone number. Please enter the 4-digit OTP: {otp}"
+    print("this is the otp message: ",otp_message)
+    otp_input = await contact_recipient_via_chat(otp_message)
+
+    if otp_input == "Recipient is not replying":
+        return "Recipient did not respond to OTP request. Cannot proceed with safe drop-off."
+
+    if otp_input != otp:
+        print("Invalid OTP. The safe drop-off has been canceled.")
+        return "OTP verification failed. Cannot proceed with safe drop-off."
+
+    # ... (rest of the function remains the same)
+    location = await contact_recipient_via_chat("Please provide the address for the safe drop-off (must be within 2 km):")
+    # ...
 
     location = await contact_recipient_via_chat("Please provide the address for the safe drop-off (must be within 2 km):")
     if location == "Recipient is not replying":
@@ -112,7 +132,7 @@ async def perform_safe_drop_off(_input: str = "") -> str:
 
     try:
         drop_lat, drop_lng = await geocode_osm(location)
-        dist = haversine(curr_lat, curr_lng, drop_lat, drop_lng)
+        dist = cal_distance(curr_lat, curr_lng, drop_lat, drop_lng)
         if dist > 2:
             print(f"\nThe location is {dist:.2f} km away, which exceeds 2 km.")
             return "Location too far. Cannot proceed with this safe drop-off."
@@ -178,9 +198,9 @@ def setup_agent():
             description="Useful for sending any message to the recipient and getting their reply. Use this for initial contact, asking permissions, or any questions. Input is the message to send."
         ),
         Tool(
-            name="perform_safe_drop_off",
-            func=perform_safe_drop_off,
-            coroutine=perform_safe_drop_off,
+            name="suggest_safe_drop_off",
+            func=suggest_safe_drop_off,
+            coroutine=suggest_safe_drop_off,
             description="Useful for handling a safe drop-off, but ONLY after the recipient has given explicit permission (e.g., replied 'yes'). This tool collects details like name, phone, and location (under 2 km), validates, and completes delivery if possible. No input required."
         ),
         Tool(
@@ -269,10 +289,10 @@ async def main():
     delivery_agent = setup_agent()
     
     
-    user_input = input("Delivery Agent, describe the situation (e.g., 'I am at the door but no one is answering'): \n> ")
+    user_input_given = input("Delivery Agent, describe the situation (e.g., 'I am at the door but no one is answering'): \n> ")
     
-    global user_scenario_input, recipient_reply
-    user_scenario_input = user_input
+    global user_input, recipient_reply
+    user_input = user_input_given
     recipient_reply = "" 
     
     initial_message = await enhance_userinput(user_input)  # just used for enhancing the delivery guy provided input 
@@ -280,7 +300,7 @@ async def main():
     agent_goal = f"""Handle the delivery for an unavailable recipient by strictly following this flow:
 1. Initiate contact with the recipient using the initial message: '{initial_message}'
 2. Evaluate their response:
-   - If affirmative (e.g., 'Yes'), proceed with perform_safe_drop_off.
+   - If affirmative (e.g., 'Yes'), proceed with suggest_safe_drop_off.
    - If negative (e.g., 'No'), contact the recipient asking: 'Would you like me to drop off the parcel at a nearby secure locker instead? Please reply with Yes or No.'
 3. Based on the locker response:
    - If affirmative, proceed with perform_locker_delivery.
