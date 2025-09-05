@@ -1,25 +1,61 @@
 import os
 import asyncio
 import json
-from dotenv import load_dotenv
-from langchain.agents import initialize_agent, AgentType, Tool
-from langchain_google_genai import GoogleGenerativeAI
+import sys
 import aiohttp
 import threading
 import random
 from math import radians, sin, cos, sqrt, atan2
 import warnings
 
-#deprications warnings ko ignore krne k liye 
-warnings.filter_settings("ignore", category=DeprecationWarning)
+# Import langchain and GoogleGenerativeAI at the top
+from langchain_google_genai import GoogleGenerativeAI
+from langchain.agents import initialize_agent, AgentType, Tool
 
-load_dotenv() 
-Google_api = os.getenv("GOOGLE_API_KEY") 
-GOOGLE_MAPS_API_KEY = os.getenv("GOOGLE_MAPS_API_KEY") 
-user_input = ""
-recipient_reply = ""
-curr_lat = None
-curr_lng = None
+# Use a queue to handle async input from stdin
+# This is a robust way to handle the non-blocking nature of async code with blocking I/O
+_input_queue = asyncio.Queue()
+
+# Thread-safe function to put input into the queue
+def input_reader():
+    for line in sys.stdin:
+        _input_queue.put_nowait(line)
+
+# Start a separate thread to read from stdin
+input_thread = threading.Thread(target=input_reader)
+input_thread.daemon = True
+input_thread.start()
+
+# Asynchronous input function to read from the queue
+async def async_input(prompt=None, timeout=None):
+    if prompt:
+        # Use a structured message to be sent to the frontend
+        sys.stdout.write(json.dumps({'type': 'prompt', 'message': prompt}) + '\n')
+        sys.stdout.flush()
+    try:
+        # Wait for input with an optional timeout
+        line = await asyncio.wait_for(_input_queue.get(), timeout)
+        _input_queue.task_done()
+        return line.strip()
+    except asyncio.TimeoutError:
+        return ""
+
+# The rest of your functions are modified to use async_input instead of input()
+# and sys.stdout.write(json.dumps()) instead of print()
+
+# Deprecation warnings can be ignored
+warnings.filterwarnings("ignore", category=DeprecationWarning)
+
+Google_api = "AIzaSyAJgV5-HrpXydB1X5w6oA07TD7n1nyXZAQ"
+GOOGLE_MAPS_API_KEY = "AIzaSyD5S9tQvpls92uiAk8RG3RZc43lIpG2_aA"
+
+# Add a check for API key validity
+if not Google_api or "AIza" not in Google_api:
+    print("ERROR: GOOGLE_API_KEY is missing or invalid. Please check your .env file and remove any quotes around the key.")
+    sys.exit(1)
+if not GOOGLE_MAPS_API_KEY or "AIza" not in GOOGLE_MAPS_API_KEY:
+    print("ERROR: GOOGLE_MAPS_API_KEY is missing or invalid. Please check your .env file and remove any quotes around the key.")
+    sys.exit(1)
 
 async def addresstolanglat(address: str) -> tuple[float, float]:
     url = f"https://maps.googleapis.com/maps/api/geocode/json?address={address.replace(' ', '+')}&key={GOOGLE_MAPS_API_KEY}"
@@ -38,13 +74,15 @@ async def find_nearby_lockers(lat: float, lng: float, radius: int = 2000) -> lis
         async with session.get(url) as response:
             result = await response.json()
             if result['status'] == 'OK':
-                print(f"Found {len(result.get('results', []))} lockers within {radius} meters. Please review and select one.")
-                return [{'name': r['name'], 'address': r['vicinity']} for r in result.get('results', [])][:5]  
+                sys.stdout.write(json.dumps({'type': 'info', 'message': f"Found {len(result.get('results', []))} lockers within {radius} meters. Please review and select one."}) + '\n')
+                sys.stdout.flush()
+                return [{'name': r['name'], 'address': r['vicinity']} for r in result.get('results', [])][:5]
             else:
                 r = radius
                 if r > 16000:
-                    print("No lockers found within 16 km radius. Do you want to proceed with a safe drop-off or return the parcel?")
-                    ans = input("Enter Yes to proceed with safe drop off or No to return the parcel: ").strip().lower()
+                    sys.stdout.write(json.dumps({'type': 'prompt', 'message': "No lockers found within 16 km radius. Do you want to proceed with a safe drop-off or return the parcel?"}) + '\n')
+                    sys.stdout.flush()
+                    ans = (await async_input()).strip().lower()
                     if ans == 'yes':
                         return []
                     else:
@@ -53,82 +91,77 @@ async def find_nearby_lockers(lat: float, lng: float, radius: int = 2000) -> lis
                     await asyncio.sleep(3)
                     return await find_nearby_lockers(lat, lng, r * 2)
 
-def haversine(lat1: float, lon1: float, lat2: float, lon2: float) -> float:
-    R = 6371 
-    dlat = radians(lat2 - lat1)
-    dlon = radians(lon2 - lon1)
-    a = sin(dlat / 2) ** 2 + cos(radians(lat1)) * cos(radians(lat2)) * sin(dlon / 2) ** 2
-    c = 2 * atan2(sqrt(a), sqrt(1 - a))
-    distance = R * c
-    return distance
-
 async def contact_recipient_via_chat(message: str) -> str:
-    global user_input, recipient_reply
-    print(f"{message}")
-
-    recipient_reply = ""
-    reply = input_with_timeout(
-        "\nEnter your reply for the delivery agent  [150s timeout]:\n> ",
-        150
-    ).strip()
-    recipient_reply = reply
-
-    if not recipient_reply:
-        recipient_reply = "Recipient is not replying"
-
-    return recipient_reply
+    # Use the async_input function with the provided message as a prompt
+    sys.stdout.write(json.dumps({'type': 'message', 'role': 'agent', 'content': message}) + '\n')
+    sys.stdout.flush()
+    
+    reply = await async_input("Enter your reply for the delivery agent [150s timeout]:\n> ", 150)
+    
+    return reply if reply else "Recipient is not replying"
 
 async def perform_safe_drop_off(_input: str = "") -> str:
     name = await contact_recipient_via_chat("Please provide the name of the person I can leave the package with:")
     if name == "Recipient is not replying":
         return "Recipient did not respond. Cannot proceed with safe drop-off."
 
-    # Loop to get a valid 10-digit phone number
     phone = ""
     while True:
         phone = await contact_recipient_via_chat("Please provide the 10-digit phone number of that person:")
         if phone == "Recipient is not replying":
             return "Recipient did not respond. Cannot proceed with safe drop-off."
         
-        # Validate that the phone number is 10 digits and contains only numeric characters
         if phone.isdigit() and len(phone) == 10:
             break
         else:
-            print("Invalid phone number. Please enter a valid 10-digit number.")
+            sys.stdout.write(json.dumps({'type': 'info', 'message': "Invalid phone number. Please enter a valid 10-digit number."}) + '\n')
+            sys.stdout.flush()
     
-    # Logic for OTP verification with regeneration option
     for i in range(3):
         otp = str(random.randint(1000, 9999))
         otp_message = f"An OTP has been sent to the provided phone number. Please enter the 4-digit OTP. You have 30 seconds to reply."
         
-        print(f"DEBUG: OTP for this attempt is {otp}")
-        otp_input = input_with_timeout(f"{otp_message}\n> ", 30).strip()
+        sys.stdout.write(json.dumps({'type': 'debug', 'message': f"DEBUG: OTP for this attempt is {otp}"}) + '\n')
+        sys.stdout.flush()
+        
+        otp_input = await async_input(f"{otp_message}\n> ", 30)
         
         if otp_input == otp:
             success_msg = f"Your parcel has been safely delivered to a neighbor with {name} (phone: {phone}). Thank you!"
-            print(success_msg)
+            sys.stdout.write(json.dumps({'type': 'success', 'message': success_msg}) + '\n')
+            sys.stdout.flush()
             return "Safe drop-off successful."
         elif otp_input.lower() == 'regenerate':
-            print("Generating a new OTP...")
+            sys.stdout.write(json.dumps({'type': 'info', 'message': "Generating a new OTP..."}) + '\n')
+            sys.stdout.flush()
         elif not otp_input:
-            print("No response received within the time limit. Retrying...")
+            sys.stdout.write(json.dumps({'type': 'info', 'message': "No response received within the time limit. Retrying..."}) + '\n')
+            sys.stdout.flush()
         else:
-            print("Invalid OTP. Retrying...")
+            sys.stdout.write(json.dumps({'type': 'info', 'message': "Invalid OTP. Retrying..."}) + '\n')
+            sys.stdout.flush()
     
-    print("OTP verification failed after multiple attempts. The safe drop-off has been canceled.")
+    sys.stdout.write(json.dumps({'type': 'error', 'message': "OTP verification failed after multiple attempts. The safe drop-off has been canceled."}) + '\n')
+    sys.stdout.flush()
     return "OTP verification failed. Please try another method."
 
 async def perform_locker_delivery(_input: str = "") -> str:
+    # Use environment variables passed from Node.js
+    curr_lat = float(os.getenv("CURRENT_LAT"))
+    curr_lng = float(os.getenv("CURRENT_LNG"))
+    
     lockers = await find_nearby_lockers(curr_lat, curr_lng)
     if not lockers:
-        print("No nearby parcel lockers found.")
+        sys.stdout.write(json.dumps({'type': 'info', 'message': "No nearby parcel lockers found."}) + '\n')
+        sys.stdout.flush()
         return "No lockers available."
 
     list_msg = "Found nearby secure parcel lockers:\n" + "\n".join(f"{i+1}. {locker['name']} at {locker['address']}" for i, locker in enumerate(lockers))
     select = await contact_recipient_via_chat(list_msg + "\nPlease select one by entering the number:")
 
     if select == "Recipient is not replying":
-        print("\nRecipient did not respond.")
+        sys.stdout.write(json.dumps({'type': 'info', 'message': "Recipient did not respond."}) + '\n')
+        sys.stdout.flush()
         return "No response from recipient."
 
     try:
@@ -137,34 +170,53 @@ async def perform_locker_delivery(_input: str = "") -> str:
             selected = lockers[num]
             pin = random.randint(1000, 9999)
             success_msg = f"I am done with the delivery to {selected['name']} at {selected['address']}. Your 4-digit PIN is {pin}."
-            print(success_msg)
+            sys.stdout.write(json.dumps({'type': 'success', 'message': success_msg}) + '\n')
+            sys.stdout.flush()
             return "Locker delivery successful."
         else:
-            print("Invalid selection.")
+            sys.stdout.write(json.dumps({'type': 'error', 'message': "Invalid selection."}) + '\n')
+            sys.stdout.flush()
             return "Invalid locker selection."
     except ValueError:
-        print("Invalid input.")
+        sys.stdout.write(json.dumps({'type': 'error', 'message': "Invalid input."}) + '\n')
+        sys.stdout.flush()
         return "Invalid input for selection."
 
 async def return_parcel(_input: str = "") -> str:
     msg = "Sadly, we are returning the parcel."
-    print(msg)
+    sys.stdout.write(json.dumps({'type': 'info', 'message': msg}) + '\n')
+    sys.stdout.flush()
     return "Parcel return initiated."
-
-def setup_agent():
-    if not Google_api:
-        raise ValueError("GOOGLE_API_KEY not found in env file")
     
-    if not GOOGLE_MAPS_API_KEY:
-        raise ValueError("GOOGLE_MAPS_API_KEY not found in env file")
+# Main function to run the agent
+# In delivery_agent.py, replace your run_agent function with this one
 
-    llm = GoogleGenerativeAI(model="gemini-1.5-flash", temperature=0)
+async def run_agent():
+    # Use environment variables passed from Node.js
+    user_input_given = os.getenv('SITUATION')
+    current_location = os.getenv('LOCATION')
+    
+    if not user_input_given or not current_location:
+        sys.stderr.write("SITUATION and LOCATION environment variables are required.\n")
+        return
+
+    try:
+        curr_lat, curr_lng = await addresstolanglat(current_location)
+    except ValueError as e:
+        sys.stderr.write(f"Geocoding failed: {e}. Using a default location.\n")
+        curr_lat, curr_lng = 40.7128, -74.0060
+
+    os.environ['CURRENT_LAT'] = str(curr_lat)
+    os.environ['CURRENT_LNG'] = str(curr_lng)
+
+    # Pass the API key explicitly to GoogleGenerativeAI
+    llm = GoogleGenerativeAI(model="gemini-1.5-flash", temperature=0, google_api_key=Google_api)
     tools = [
         Tool(
             name="contact_recipient_via_chat",
             func=contact_recipient_via_chat,
             coroutine=contact_recipient_via_chat,
-            description="Useful for sending any message to the recipient and getting their reply. Use this for initial contact, asking permissions, or any questions. Input is the message to send."
+            description="Useful for sending any message to the recipient and getting their reply. Input is the message to send."
         ),
         Tool(
             name="perform_safe_drop_off",
@@ -185,95 +237,19 @@ def setup_agent():
             description="Useful as a last resort if the recipient declines all options. This informs the recipient that the parcel is being returned. No input required."
         )
     ]
-
+    
     agent = initialize_agent(
         tools,
         llm,
         agent=AgentType.ZERO_SHOT_REACT_DESCRIPTION,
         verbose=True
     )
-
-    return agent
-
-async def enhance_userinput(user_input: str) -> str:
-    prompt = (
-        f"You are a prompt engineer for a delivery agent. A delivery partner has a valuable package, "
-        f"but the recipient is unavailable. The delivery partner describes the situation as: "
-        f"'{user_input}'. "
-        f"Your task is to generate a polite initial message to send to the recipient, informing them of the situation "
-        f"and asking for permission to leave the parcel with a neighbor or security guard. End the message with: 'Can I leave it with a neighbor or a security guard? Please reply with Yes or No.' "
-        f"The message should be clear and direct."
-    )
-
-    chatHistory = [{"role": "user", "parts": [{"text": prompt}]}]
-    payload = {"contents": chatHistory}
     
-    apiKey = Google_api
-    apiUrl = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key={apiKey}"
-
-    async with aiohttp.ClientSession() as session:
-        try:
-            async with session.post(apiUrl, headers={'Content-Type': 'application/json'}, data=json.dumps(payload)) as response:
-                result = await response.json()
-                if result.get('candidates') and len(result['candidates']) > 0 and 'parts' in result['candidates'][0]['content']:
-                    return result['candidates'][0]['content']['parts'][0]['text']
-                else:
-                    print("API call failed, using default prompt.")
-                    return (
-                        f"I have arrived at your location with your valuable package, but you are unavailable. "
-                        f"The situation is: '{user_input}'. "
-                        f"Can I leave it with a neighbor or a security guard? Please reply with Yes or No."
-                    )
-        except Exception as e:
-            print(f"An error occurred during API call: {e}")
-            return (
-                f"I have arrived at your location with your valuable package, but you are unavailable. "
-                f"The situation is: '{user_input}'. "
-                f"Can I leave it with a neighbor or a security guard? Please reply with Yes or No."
-            )
-
-def input_with_timeout(prompt, timeout):
-    result = {"reply": ""}
-    def get_input():
-        result["reply"] = input(prompt)
-    thread = threading.Thread(target=get_input)
-    thread.daemon = True
-    thread.start()
-    thread.join(timeout)
-    if thread.is_alive():
-        return ""
-    return result["reply"]
-
-async def main():
-    global curr_lat, curr_lng
-    current_location = input("Delivery Agent, enter your current address for location services (e.g., 'Lucknow, India'): \n> ")
-    try:
-        curr_lat, curr_lng = await addresstolanglat(current_location)
-    except ValueError as e:
-        print(f"Geocoding failed: {e} ")
-        curr_lat, curr_lng = 40.7128, -74.0060
+    # This new, simplified prompt directs the agent to the very first step.
+    agent_goal = f"The delivery partner's situation is: '{user_input_given}'. Initiate a chat with the recipient to handle this delivery. Your first message should be polite and ask for permission to leave the parcel with a neighbor or guard."
     
-    delivery_agent = setup_agent()
-    
-    user_input_given = input("Delivery Agent, describe the situation (e.g., 'I am at the door but no one is answering'): \n> ")
-    
-    global user_input, recipient_reply
-    user_input = user_input_given
-    recipient_reply = "" 
-    
-    initial_message = await enhance_userinput(user_input)
-    
-    agent_goal = f"""Handle the delivery for an unavailable recipient by strictly following this flow:
-1. Initiate contact with the recipient using the initial message: '{initial_message}'
-2. Evaluate their response to the neighbor/guard option:
-    - If affirmative (e.g., 'Yes'), proceed with perform_safe_drop_off.
-    - If negative (e.g., 'No'), or if the `perform_safe_drop_off` tool fails, contact the recipient asking: 'Would you like me to drop off the parcel at a nearby secure locker instead? Please reply with Yes or No.'
-3. Based on the locker response:
-    - If affirmative, proceed with perform_locker_delivery.
-    - If negative, use return_parcel.
-Use tools only as needed in this sequence. If the recipient does not reply at any step, the agent should assume a negative response and move to the next logical step."""
+    await agent.arun(agent_goal)
 
-    await delivery_agent.arun(agent_goal)
-
+# The rest of the code remains unchanged.
 if __name__ == "__main__":
-    asyncio.run(main())
+    asyncio.run(run_agent())
