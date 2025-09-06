@@ -24,12 +24,12 @@ app.get('/ping', (req, res) => {
 io.on('connection', (socket) => {
     console.log('A user connected:', socket.id);
     let pythonProcess;
-    // Start the Python agent for a new user
+
     socket.on('start_session', (data) => {
         console.log('Starting Python agent for user:', data.user_id);
-        
-        // Pass API keys and initial data to the Python process via environment variables or command-line args
-        pythonProcess = spawn('python3', [path.join(__dirname, 'delivery_agent.py')], {
+
+        const pythonExecutable = path.join(__dirname, 'venv', 'Scripts', 'python.exe');
+        pythonProcess = spawn(pythonExecutable, [path.join(__dirname, 'main.py')], {
             env: {
                 ...process.env,
                 USER_ID: data.user_id,
@@ -38,36 +38,52 @@ io.on('connection', (socket) => {
             }
         });
 
-        // Listen for data from Python script (stdout)
+        // Buffer stdout and emit each valid JSON line to the frontend
+        let buffer = '';
         pythonProcess.stdout.on('data', (data) => {
-            const message = data.toString().trim();
-            try {
-                const jsonMessage = JSON.parse(message);
-                // Emit the structured message to the frontend
-                socket.emit('agent_response', jsonMessage);
-                console.log('Received from Python:', jsonMessage);
-            } catch (e) {
-                console.error('Failed to parse JSON from Python:', message);
+            buffer += data.toString();
+            const lines = buffer.split('\n');
+            buffer = lines.pop(); // keep incomplete line in buffer
+            for (const line of lines) {
+                try {
+                    const jsonMessage = JSON.parse(line.trim());
+                    socket.emit('agent_response', jsonMessage);
+                    console.log('Received from Python:', jsonMessage);
+                } catch (e) {
+                    // Not JSON, ignore
+                }
             }
         });
 
-        // Listen for errors from Python script (stderr)
         pythonProcess.stderr.on('data', (data) => {
+            socket.emit('error_message', data.toString());
             console.error('Python Error:', data.toString());
-            socket.emit('error_message', 'An error occurred with the agent.');
         });
     });
 
-    // Handle user input from the frontend
-    socket.on('send_user_input', (input) => {
-        if (pythonProcess) {
-            // Send user's reply to the Python script's stdin
-            pythonProcess.stdin.write(JSON.stringify({ input: input }) + '\n');
-            console.log('Sent to Python stdin:', input);
-        }
-    });
+socket.on('send_user_input', (input) => {
+    if (pythonProcess) {
+        try {
+            // Check if the input is a JSON object and has an 'input' key.
+            // If it's a string, we assume it's the raw user input.
+            const userText = typeof input === 'object' && input !== null && 'input' in input
+                ? input.input
+                : input;
 
-    // Clean up when a user disconnects
+            // Python expects a JSON string, so we must stringify it.
+            // The JSON.stringify() method is what makes it work.
+            const jsonInput = JSON.stringify({ input: userText });
+            
+            // Write the JSON string to Python's stdin, followed by a newline.
+            pythonProcess.stdin.write(jsonInput + '\n');
+            
+            console.log('Sent to Python stdin:', jsonInput);
+        } catch (error) {
+            console.error('Failed to process user input:', error);
+        }
+    }
+});
+
     socket.on('disconnect', () => {
         console.log('User disconnected:', socket.id);
         if (pythonProcess) {
