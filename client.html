@@ -4,7 +4,7 @@
 <body style="background-color: black; color: white;">
   <h3>Socket.IO test UI</h3>
   <button id="start">Start Session</button>
-  <div id="log" style="white-space:pre-wrap;color: white; border:1px solid #ccc; padding:8px; height:300px; overflow:auto;"></div>
+  <div id="log" style="white-space:pre-wrap;color: white; border:1px solid #ccc; padding:8px; height:500px; overflow:auto;"></div>
   <input id="text" placeholder="type reply"/>
   <button id="send">Send Reply</button>
 
@@ -13,7 +13,7 @@
     const log = (t)=> (document.getElementById('log').textContent += t + '\n');
     const socket = io('http://localhost:3001');
     document.getElementById('start').onclick = () => {
-      socket.emit('start_session', { user_id: 'webtester', location: 'Lucknow, India', situation: "Recipient not available" });
+      socket.emit('start_session', { user_id: 'webtester', location: 'surat, gujarat, India', situation: "muje gher jaana hain" });
       log('start_session sent');
     };
     socket.on('agent_response', (evt) => {

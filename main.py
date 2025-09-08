@@ -26,9 +26,9 @@ async def detect_scenario(user_text: str) -> str:
 async def main():
     import sys
 
-    # Expect input via WebSocket stdin (JSON lines)
-    print(json.dumps({"type": "request_user_input", "prompt": "Describe your situation"}), flush=True)
+    print(json.dumps({"type": "request_user_input", "prompt": "Describe your situation", "target": "driver"}), flush=True)
 
+    scenario_text = ""
     for line in sys.stdin:
         try:
             data = json.loads(line.strip())
@@ -38,10 +38,16 @@ async def main():
         if "input" in data:
             scenario_text = data["input"]
             break
-    else:
-        scenario_text = ""
 
-    scenario = await detect_scenario(scenario_text)
+    if not scenario_text:
+        print(json.dumps({"type": "error", "message": "No scenario description provided."}), flush=True)
+        return
+
+    try:
+        scenario = await detect_scenario(scenario_text)
+    except Exception as e:
+        print(json.dumps({"type": "error", "message": f"Scenario detection failed: {e}"}), flush=True)
+        return
 
     if scenario.lower() == "grabexpress":
         await run_grabexpress_flow_entry()
