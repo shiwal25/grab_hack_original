@@ -2,48 +2,10 @@
 <img width="957" alt="kayo-chan" src="https://github.com/user-attachments/assets/f423798c-1161-4c3b-b4c0-199e6d62c024">
 
 <p align="center"><i>(Team Hackon)</i></p>
-
-<p id="description">Developed an asynchronous event-driven Python application that leverages LangChain Google Generative AI (Gemini) and Google Maps Platform to automate decision-making in two operational domains: GrabExpress: Handles delivery partner–recipient communication suggests safe drop-off locations finds secure lockers and processes recipient responses with LLM-based intent parsing. GrabCar: Monitors traffic between origin–destination calculates alternative optimal routes notifies passengers/drivers and checks live flight statuses for urgent trips. Key Features: Natural language classification of user scenarios into logistics or ride-hailing workflows. Prompt engineering for enhanced agent goals and precise LLM responses. Real-time geocoding routing and traffic analysis via Google Maps APIs. Flight status tracking using AviationStack API. Automated timeout handling for unresponsive users. Integrated with asynchronous coroutines for scalable concurrent API calls.</p>
-
-
-
-<br />
-
-#### TechStacks Used by Us :
-
-<!--START_SECTION:waka-->
-```
-Langchain                     ██████████████████▓░░░░░░   75.25 %
-
-JSON                          █████▒░░░░░░░░░░░░░░░░░░░   21.23 %
-
-TSConfig                      ▓░░░░░░░░░░░░░░░░░░░░░░░░   02.48 %
-
-Vue.js                        ▒░░░░░░░░░░░░░░░░░░░░░░░░   00.67 %
-
-Git Config                    ░░░░░░░░░░░░░░░░░░░░░░░░░   00.28 %
-```
-<!--END_SECTION:waka-->
-
-<br />
-<p> need to be updated when we have pushed all code </p>
-
-<!--
-     This is the list of my skills and tools I am studying!
--->
-### Main skills
-[![My Skills](https://skillicons.dev/icons?i=py,regex,github,git,mongodb,mysql,eclipse,java,spring,js,nodejs,react,express,jest,jenkins,cpp,cs,dotnet,html,css,bootstrap,pug,php,androidstudio,blender,ps,notion)](https://skillicons.dev)
-
-### Studying
-[![Learning](https://skillicons.dev/icons?i=aws,azure,ruby)](https://skillicons.dev)
-
-Explanations :
-[https://youtu.be/XnvdVjgUIKA](https://youtu.be/XnvdVjgUIKA)
-
-Code Architecture of Prototype :
-[https://app.eraser.io/workspace/72CRzJvRh0oKGkwe4omY?origin=share](https://app.eraser.io/workspace/72CRzJvRh0oKGkwe4omY?origin=share)
-  
-  
+<h2>Description</h2>
+<br>
+<p id="description">
+Developed an asynchronous event-driven Python application that leverages LangChain Google Generative AI (Gemini) and Google Maps Platform to automate decision-making in two operational domains: GrabExpress: Handles delivery partner–recipient communication suggests safe drop-off locations finds secure lockers and processes recipient responses with LLM-based intent parsing. GrabCar: Monitors traffic between origin–destination calculates alternative optimal routes notifies passengers/drivers and checks live flight statuses for urgent trips. Key Features: Natural language classification of user scenarios into logistics or ride-hailing workflows. Prompt engineering for enhanced agent goals and precise LLM responses. Real-time geocoding routing and traffic analysis via Google Maps APIs. Flight status tracking using AviationStack API. Automated timeout handling for unresponsive users. Integrated with asynchronous coroutines for scalable concurrent API calls.</p>
 <h2>🧐 Features</h2>
 
 Here're some of the project's best features:
@@ -57,6 +19,8 @@ Here're some of the project's best features:
 *   Asynchronous & Scalable – Built with asyncio and aiohttp for concurrent non-blocking API calls.
 *   Customizable Agent Tools – Modular tool setup with LangChain making it easy to extend with new APIs or logic.
 
+
+<br />
 <h2>🛠️ Installation Steps:</h2>
 
 <p>1. Clone the repository</p>
@@ -97,21 +61,48 @@ FLIGHT_API_KEY=your_aviationstack_api_key
 python main.py
 ```
 
-  
-  
-<h2>💻 Built with</h2>
 
-Technologies used in the project:
+#### TechStacks Used by Us :
 
-*   Python
-*   LangChain
-*   Google Generative AI (Gemini)
-*   Google Maps API
-*   AviationStack API
-*   Aiohttp
-*   Asyncio
-*   Threading
-*   Dotenv
+<!--START_SECTION:waka-->
+```
+Langchain                     ██████████████████▓░░░░░░   75.25 %
+
+JSON                          █████▒░░░░░░░░░░░░░░░░░░░   21.23 %
+
+TSConfig                      ▓░░░░░░░░░░░░░░░░░░░░░░░░   02.48 %
+
+Vue.js                        ▒░░░░░░░░░░░░░░░░░░░░░░░░   00.67 %
+
+Git Config                    ░░░░░░░░░░░░░░░░░░░░░░░░░   00.28 %
+```
+<!--END_SECTION:waka-->
+
+<br />
+<p> need to be updated when we have pushed all code </p>
+
+<!--
+     This is the list of my skills and tools I am studying!
+-->
+### Main skills
+[![My Skills](https://skillicons.dev/icons?i=py,regex,github,git,mongodb,mysql,eclipse,java,spring,js,nodejs,react,express,jest,jenkins,cpp,cs,dotnet,html,css,bootstrap,pug,php,androidstudio,blender,ps,notion)](https://skillicons.dev)
+
+### Studying
+[![Learning](https://skillicons.dev/icons?i=aws,azure,ruby)](https://skillicons.dev)
+
+
+
+<h2> Architecture </h2>
+
+
+
+
+[https://app.eraser.io/workspace/72CRzJvRh0oKGkwe4omY?origin=share](https://app.eraser.io/workspace/72CRzJvRh0oKGkwe4omY?origin=share)
+  
+<h2> Work Demonstration </h2>
+
+[https://youtu.be/XnvdVjgUIKA](https://youtu.be/XnvdVjgUIKA)
+
 
   <h2> REFERENCES AND LINKS </h2>
   <table><tr><td valign="top" width="33%">
