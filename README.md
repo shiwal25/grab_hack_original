@@ -1,8 +1,43 @@
-<h1 align="center" id="title_of_project">PROJECT SYNAPSE (TEAM HACKON)</h1>
 <a href="https://git.io/typing-svg"><img src="https://readme-typing-svg.demolab.com?font=Libertinus+Keyboard&size=17&pause=1000&color=F70C0C&background=FFFFFF00&center=true&width=480&lines=HEY+!+WELCOME+TO+OUR+PROJECT+" alt="Typing SVG" /></a>
+<h1 align="center" id="title_of_project">PROJECT SYNAPSE (TEAM HACKON)</h1>
 <img width="957" alt="Team-hackon-icon" src="https://github.com/user-attachments/assets/f423798c-1161-4c3b-b4c0-199e6d62c024">
 
-<p align="center"><i>(Team Hackon)</i></p>
+<p align="center"><i>(Team Hackon)
+</i></p>
+<h2> DESCRIPTION : <img src="assests/flamey.gif" width="30"/><img src="assests/flamey.gif" width="30"/></h2>
+<table width="100%">
+  <tr>
+    <td align="left">
+      <img src="https://github.com/user-attachments/assets/88a45e11-061d-47c3-97f6-3ed01c20caae" alt="HackOn" width="180">
+    </td>
+    <td align="right" valign="middle">
+      <h2>PROJECT SYNAPSE</h2>
+    </td>
+  </tr>
+</table>
+
+
+<br>
+     <h3> 1.) GrabExpress: </h3> <br>
+     <img width="2647" height="334" alt="diagram-export-9-9-2025-1_58_06-AM" src="https://github.com/user-attachments/assets/13e65670-b050-419d-ac47-d2a00f33adee" /><br>     
+     <h3> 2.) GrabCar: </h3> <br>
+     <img width="1640" height="795" alt="diagram-export-9-9-2025-2_35_01-AM" src="https://github.com/user-attachments/assets/eddb65ea-996a-4b42-a856-4c180b52a79f" />
+     <h3>3.) GrabFood: </h3><br>
+     <img width="1904" height="1187" alt="diagram-export-09-09-2025-02_54_01" src="https://github.com/user-attachments/assets/5df82091-c267-4e9f-b061-cb815ff756f4" />
+     <h3>4.) GarbMart: </h3><br>
+     <img width="3081" height="2865" alt="diagram-export-09-09-2025-02_55_56" src="https://github.com/user-attachments/assets/49f3ea33-10d9-4c9a-8251-915b13d0c195" />
+
+    
+
+* 🐾 I’m looking to network and make friends here! <br><br>
+
+* 🌊 2023 Goals: Contribute more to Open Source projects <br><br>
+
+* ☕ Interest: Cats, Coffee, and Coding. <br><br>
+
+* :octocat: Hobbies: Sleeping, Anime/Manga, Gacha Games, Discord, and Reddit. <br><br>
+
+<h2>
 <h2>Description</h2>
 <br>
 <p id="description">
