@@ -1,5 +1,6 @@
-<h1 align="center" id="title">PROJECT SYNAPSE (TEAM HACKON)</h1>
-<img width="957" alt="kayo-chan" src="https://github.com/user-attachments/assets/f423798c-1161-4c3b-b4c0-199e6d62c024">
+<h1 align="center" id="title_of_project">PROJECT SYNAPSE (TEAM HACKON)</h1>
+<a href="https://git.io/typing-svg"><img src="https://readme-typing-svg.demolab.com?font=Libertinus+Keyboard&size=17&pause=1000&color=F70C0C&background=FFFFFF00&center=true&width=480&lines=HEY+!+WELCOME+TO+OUR+PROJECT+" alt="Typing SVG" /></a>
+<img width="957" alt="Team-hackon-icon" src="https://github.com/user-attachments/assets/f423798c-1161-4c3b-b4c0-199e6d62c024">
 
 <p align="center"><i>(Team Hackon)</i></p>
 <h2>Description</h2>
@@ -147,18 +148,16 @@ More on [simonwillison.net](https://simonwillison.net/)
 
 ### API KEYS
 <!-- tils starts -->
-[Running a gpt-oss eval suite against LM Studio on a Mac](https://til.simonwillison.net/llms/gpt-oss-evals) - 2025-08-17
 
-[Configuring GitHub Codespaces using devcontainers](https://til.simonwillison.net/github/codespaces-devcontainers) - 2025-08-13
+[TRAIN STATUS API KEY USED      (RAPID API) : ](https://rapidapi.com/rahilkhan224/api/indian-railway-irctc)
 
-[Rate limiting by IP using Cloudflare's rate limiting rules](https://til.simonwillison.net/cloudflare/rate-limiting) - 2025-07-03
+[FLIGHT STATUS API KEY USED     (AviationStack)](https://aviationstack.com/)
 
-[Using Playwright MCP with Claude Code](https://til.simonwillison.net/claude-code/playwright-mcp-claude-code) - 2025-07-01
+[GOOGLE MAP API KEY USED        (GOOGLE MAPS)](https://developers.google.com/maps/documentation/javascript/get-api-key) 
 
-[Converting ORF raw files to JPEG on macOS](https://til.simonwillison.net/macos/orf-to-jpeg) - 2025-06-26
+[LANGCHAIN GOOGLE GENAI         (GOOGLE GEMINI)](https://ai.google.dev/gemini-api/docs/api-key)
 
-[Publishing a Docker container for Microsoft Edit to the GitHub Container Registry](https://til.simonwillison.net/github/container-registry) - 2025-06-21
+[BUS STATUS API KEY             (DATAMALL LANDTRANSPORT)](https://datamall.lta.gov.sg/content/datamall/en.html)
 <!-- tils ends -->
-More on [til.simonwillison.net](https://til.simonwillison.net/)
 </td></tr></table>
 
