@@ -4,6 +4,7 @@ import json
 from dotenv import load_dotenv
 from langchain_google_genai import GoogleGenerativeAI
 from GrabExpress import run_grabexpress_flow_entry
+from GrabCar import run_grabcar_flow_entry
 
 load_dotenv()
 GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY", "")
@@ -45,7 +46,7 @@ async def main():
     if scenario.lower() == "grabexpress":
         await run_grabexpress_flow_entry()
     elif scenario.lower() == "grabcar":
-        print(json.dumps({"type": "info", "message": "GrabCar scenario detected. Flow not implemented."}), flush=True)
+        await run_grabcar_flow_entry()
     else:
         print(json.dumps({"type": "error", "message": "Could not classify scenario. Please try again."}), flush=True)
 
