@@ -308,8 +308,8 @@ async def calculate_alternative_route(_input: str = "") -> str:
                 f"{i}. {r['route_name']} — {fmt_distance(dist)}, ETA {changetime(eta)} ({delta_str})"
             )
 
-        lines.append("\nReply with a number to switch, or type 'stay' to keep current route.")
-        return "\n".join(lines)
+        lines.append("Reply with a number to switch, or type 'stay' to keep current route.")
+        return "".join(lines)
 
 async def set_current_route(selection: str) -> str:
     global current_route_index
@@ -339,7 +339,7 @@ async def notify_passenger_and_driver(message: str) -> str:
 
     print(json.dumps({"type": "info", "message": message}), flush=True)
 
-    reply = await input_with_timeout("Your reply (number/stay) [120s timeout]:\n> ", 120)
+    reply = await input_with_timeout("Your reply (number/stay) [120s timeout]:> ", 120)
     return reply or ""
 
 def safe_get(d, *keys, default=0):
@@ -588,23 +588,23 @@ async def traffic_monitor_loop():
             if det["has_obstruction"] and det["severity"] == "MAJOR":
                 chosen = all_routes[current_route_index]
                 msg = (
-                    "Alert: We detected a major obstruction on your current route.\n"
-                    f"Route distance: {fmt_distance(chosen['distance_m'])}\n"
-                    f"Normal time (no traffic): {changetime(det['base_sec'])}\n"
-                    f"Current ETA (with obstruction): {changetime(det['eta_sec'])}\n"
-                    f"Delay: {changetime(det['delta_sec'])}\n"
-                    f"Severity: {det['severity']}\n"
+                    "Alert: We detected a major obstruction on your current route."
+                    f"Route distance: {fmt_distance(chosen['distance_m'])}"
+                    f"Normal time (no traffic): {changetime(det['base_sec'])}"
+                    f"Current ETA (with obstruction): {changetime(det['eta_sec'])}"
+                    f"Delay: {changetime(det['delta_sec'])}"
+                    f"Severity: {det['severity']}"
                 )
                 menu = await calculate_alternative_route("")
-                reply = await notify_passenger_and_driver(msg + "\n" + menu)
+                reply = await notify_passenger_and_driver(msg + "" + menu)
                 if reply:
                     print(json.dumps({"type": "info", "message": await set_current_route(reply)}), flush=True)
             else:
                 chosen = all_routes[current_route_index]
                 ping = (
-                    f"Route clear.\n"
-                    f"Distance: {fmt_distance(chosen['distance_m'])}\n"
-                    f"ETA (with traffic): {changetime(chosen['duration_with_traffic_seconds'])}\n"
+                    f"Route clear."
+                    f"Distance: {fmt_distance(chosen['distance_m'])}"
+                    f"ETA (with traffic): {changetime(chosen['duration_with_traffic_seconds'])}"
                 )
                 print(json.dumps({"type": "info", "message": ping}), flush=True)
 
@@ -673,16 +673,16 @@ async def transit_monitor_loop():
 async def run_grabcar_flow():
     global orig_latlng, dest_latlng, mode_of_transport, pnr, train_departure_date, _prompt_target
 
-    _prompt_target = "recipent"
-    origin_addr = await input_with_timeout("Driver, Enter your current address :\n>", 300)
-    dest_addr = await input_with_timeout("Enter Customer's destination address :\n>", 300)
+    _prompt_target = "recipient"
+    origin_addr = await input_with_timeout("Driver, Enter your current address :>", 300)
+    dest_addr = await input_with_timeout("Enter Customer's destination address :>", 300)
 
-    mode_of_transport = (await input_with_timeout("Continuation mode at destination? (flight/train/other):\n> ", 60)).strip().lower() or "other"
+    mode_of_transport = (await input_with_timeout("Continuation mode at destination? (flight/train/other):> ", 60)).strip().lower() or "other"
     if mode_of_transport == "train":
-        pnr = (await input_with_timeout("Enter Train number :\n> ", 60)).strip() or None
-        train_departure_date = (await input_with_timeout("Enter train departure date (YYYYMMDD):\n> ", 60)).strip() or None
+        pnr = (await input_with_timeout("Enter Train number :> ", 60)).strip() or None
+        train_departure_date = (await input_with_timeout("Enter train departure date (YYYYMMDD):> ", 60)).strip() or None
     elif mode_of_transport == "flight":
-        pnr = (await input_with_timeout("Enter ID of your flight for details :\n> ", 60)).strip() or None
+        pnr = (await input_with_timeout("Enter ID of your flight for details :> ", 60)).strip() or None
        
     else:    
         print(json.dumps({"type": "info", "message": "No transit monitoring will be done as this transit tool is not available right now"}), flush=True)
@@ -714,7 +714,7 @@ async def run_grabcar_flow():
     event_task = asyncio.create_task(transit_monitor_loop())
 
     try:
-        print(json.dumps({"type": "info", "message": "\nMonitoring started. Press Ctrl+C to stop.\n"}), flush=True)
+        print(json.dumps({"type": "info", "message": "Monitoring started. Press Ctrl+C to stop."}), flush=True)
         await asyncio.gather(check_status, event_task)
     except asyncio.CancelledError:
         pass
