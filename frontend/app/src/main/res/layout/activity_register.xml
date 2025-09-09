@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".registerActivity"
+    android:background="@color/background">
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="140dp"
+        android:fontFamily="sans-serif-black"
+        android:gravity="center"
+        android:text="CREATE YOUR ACCOUNT"
+        android:textSize="34sp"
+        android:textColor="@color/textColor"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/reg_name"
+        android:layout_width="250dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="100dp"
+        android:ems="10"
+        android:gravity="start"
+        android:hint="Name"
+        android:textColor="@color/textColor"
+        android:inputType="textPersonName"
+        android:textAlignment="gravity"
+        android:textColorHint="#888888"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+    <EditText
+        android:id="@+id/reg_mail"
+        android:layout_width="250dp"
+        android:layout_height="45dp"
+        android:ems="10"
+        android:gravity="start"
+        android:hint="Email ID"
+        android:inputType="textEmailAddress"
+        android:textAlignment="gravity"
+        android:textColor="@color/textColor"
+        android:textColorHint="#888888"
+        android:textSize="18sp"
+        android:layout_marginTop="15dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.503"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/reg_name" />
+
+    <EditText
+        android:id="@+id/reg_password"
+        android:layout_width="250dp"
+        android:layout_height="45dp"
+        android:ems="10"
+        android:gravity="start"
+        android:hint="Password"
+        android:layout_marginTop="15dp"
+        android:inputType="textPassword"
+        android:textAlignment="gravity"
+        android:textColor="@color/textColor"
+        android:textColorHint="#888888"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/reg_mail" />
+
+    <RadioGroup
+        android:id="@+id/radioGroup"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/reg_password">
+
+            <RadioButton
+                android:id="@+id/selectUser"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="User"
+                android:buttonTint="@color/toolbar_background_color"/>
+            <RadioButton
+                android:id="@+id/selectPartner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Grab Partner"
+                android:buttonTint="@color/toolbar_background_color"/>
+    </RadioGroup>
+
+    <Button
+        android:id="@+id/reg_button"
+        android:layout_width="250dp"
+        android:layout_height="50dp"
+        android:backgroundTint="@color/toolbar_background_color"
+        android:text="Register"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/radioGroup"
+        android:layout_marginTop="8dp"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

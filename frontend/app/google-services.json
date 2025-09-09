@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1088237503507",
+    "project_id": "grabapp-284e5",
+    "storage_bucket": "grabapp-284e5.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1088237503507:android:3ddef51fd9089ebce3abe6",
+        "android_client_info": {
+          "package_name": "com.example.hackon"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDElOd1x7hUTRqTrImzlhL1-EakUn8jIFE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="24dp"
+    android:background="@android:color/white">
+
+    <TextView
+        android:id="@+id/toolName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Tool: contact_recipient_via_chat"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:textColor="@android:color/black"
+        android:layout_marginBottom="16dp" />
+
+    <TextView
+        android:text="Tool Input:"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:textColor="@android:color/darker_gray"
+        android:layout_marginBottom="8dp" />
+
+    <TextView
+        android:id="@+id/toolInput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Tool input details"
+        android:textSize="14sp"
+        android:textColor="@android:color/black"
+        android:background="@android:color/background_light"
+        android:padding="12dp"
+        android:layout_marginBottom="16dp" />
+
+    <TextView
+        android:text="Log Details:"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:textColor="@android:color/darker_gray"
+        android:layout_marginBottom="8dp" />
+
+    <TextView
+        android:id="@+id/logDetails"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Log details"
+        android:textSize="14sp"
+        android:textColor="@android:color/black"
+        android:background="@android:color/background_light"
+        android:padding="12dp"
+        android:layout_marginBottom="24dp" />
+
+    <Button
+        android:id="@+id/closeButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Close"
+        android:backgroundTint="#07af4f"
+        android:textColor="@android:color/white" />
+
+</LinearLayout>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="24dp"
+    android:background="@android:color/white">
+
+    <TextView
+        android:id="@+id/eventTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Event Title"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textColor="@android:color/black"
+        android:gravity="center"
+        android:layout_marginBottom="16dp" />
+
+    <TextView
+        android:id="@+id/eventMessage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Event message details"
+        android:textSize="16sp"
+        android:textColor="@android:color/darker_gray"
+        android:gravity="center"
+        android:layout_marginBottom="24dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center">
+
+        <Button
+            android:id="@+id/cancelButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Cancel"
+            android:backgroundTint="@android:color/darker_gray"
+            android:textColor="@android:color/white"
+            android:layout_marginEnd="8dp" />
+
+        <Button
+            android:id="@+id/proceedButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Proceed"
+            android:backgroundTint="#07af4f"
+            android:textColor="@android:color/white"
+            android:layout_marginStart="8dp" />
+
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".deliveryHomeActivity"
+    android:background="@color/background">
+
+    <Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="65dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@color/toolbar_background_color"
+        android:elevation="16dp">
+
+        <ImageView
+            android:padding="4dp"
+            android:layout_width="200dp"
+            android:layout_height="match_parent"
+            android:scaleType="fitCenter"
+            android:src="@drawable/logo"/>
+        <Button
+            android:elevation="8dp"
+            android:id="@+id/logoutButton"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_gravity="end"
+            android:layout_marginEnd="8dp"
+            android:backgroundTint="#06ae4d"
+            android:text="logout"
+            android:textColor="@color/white" />
+    </Toolbar>
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingBottom="16dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar">
+
+        <LinearLayout
+            android:layout_margin="16dp"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <com.airbnb.lottie.LottieAnimationView
+                    android:layout_width="175dp"
+                    android:layout_height="175dp"
+                    android:src="@raw/express"
+                    app:lottie_rawRes="@raw/express"
+                    android:padding="16dp"
+                    app:lottie_autoPlay="true"
+                    app:lottie_loop="false"/>
+
+                <TextView
+                    android:layout_width="75dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:fontFamily="sans-serif"
+                    android:text="Express"
+                    android:textColor="@color/textColor"
+                    android:textSize="20dp"
+                    android:textStyle="bold|italic" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+                <com.airbnb.lottie.LottieAnimationView
+                    android:layout_width="175dp"
+                    android:layout_height="175dp"
+                    android:src="@raw/food"
+                    app:lottie_rawRes="@raw/food"
+                    android:padding="16dp"
+                    app:lottie_autoPlay="true"
+                    app:lottie_loop="false"/>
+
+                <TextView
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:fontFamily="sans-serif"
+                    android:text="Food"
+                    android:textColor="@color/textColor"
+                    android:textSize="20dp"
+                    android:textStyle="bold|italic" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_margin="16dp"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <com.airbnb.lottie.LottieAnimationView
+                    android:layout_width="175dp"
+                    android:layout_height="175dp"
+                    android:src="@raw/car"
+                    app:lottie_rawRes="@raw/car"
+                    android:padding="16dp"
+                    app:lottie_autoPlay="true"
+                    app:lottie_loop="false"/>
+
+                <TextView
+                    android:layout_width="35dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:fontFamily="sans-serif"
+                    android:text="Car"
+                    android:textColor="@color/textColor"
+                    android:textSize="20dp"
+                    android:textStyle="bold|italic" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <com.airbnb.lottie.LottieAnimationView
+                    android:layout_width="175dp"
+                    android:layout_height="175dp"
+                    android:src="@raw/mart"
+                    app:lottie_rawRes="@raw/mart"
+                    android:padding="16dp"
+                    app:lottie_autoPlay="true"
+                    app:lottie_loop="false"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:fontFamily="sans-serif"
+                    android:text="Mart"
+                    android:textColor="@color/textColor"
+                    android:textSize="20dp"
+                    android:textStyle="bold|italic" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+    <ScrollView
+        android:id="@+id/messagesScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_margin="16dp"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+        app:layout_constraintBottom_toTopOf="@+id/inputLayout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <LinearLayout
+            android:id="@+id/messagesContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="8dp" />
+
+    </ScrollView>
+
+    <LinearLayout
+        android:id="@+id/inputLayout"
+        android:layout_width="match_parent"
+        android:layout_height="75dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:gravity="center">
+        <EditText
+            android:layout_width="250dp"
+            android:layout_height="50dp"
+            android:id="@+id/scenarioText"
+            android:hint="Enter Disruption Scenario"
+            android:padding="8dp"
+            android:layout_marginEnd="4dp"/>
+        <androidx.cardview.widget.CardView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            app:cardCornerRadius="25dp"
+            android:layout_marginStart="4dp"
+            android:layout_marginEnd="4dp"
+            android:backgroundTint="#07af4f">
+            <ImageButton
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/ic_microphone"
+                android:padding="8dp"
+                android:scaleType="fitCenter"
+                android:background="@android:color/transparent"
+                android:id="@+id/sendAudioBtn"/>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            app:cardCornerRadius="25dp"
+            android:layout_marginStart="4dp"
+            android:backgroundTint="#07af4f">
+            <ImageButton
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/ic_send"
+                android:padding="8dp"
+                android:scaleType="fitCenter"
+                android:background="@android:color/transparent"
+                android:id="@+id/sendScenarioBtn"/>
+        </androidx.cardview.widget.CardView>
+    </LinearLayout>
+
+    <include
+        android:id="@+id/includeLoadingScreen"
+        layout="@layout/loading_screen"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:visibility="gone"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

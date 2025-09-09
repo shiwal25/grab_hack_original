@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_marginBottom="8dp"
+    android:layout_marginTop="12dp"
+    android:layout_marginEnd="12dp"
+    android:layout_marginStart="8dp"
+    android:layout_gravity="end"
+    android:padding="4dp">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        app:cardCornerRadius="25dp"
+        android:layout_gravity="end"
+        android:padding="4dp"
+        android:backgroundTint="@color/messageColor"
+        android:elevation="2dp">
+
+        <TextView
+            android:maxWidth="275dp"
+            android:minHeight="50dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:padding="8dp"
+            android:textAlignment="viewStart"
+            android:layout_gravity="start"
+            android:textColor="@color/textColor"
+            android:id="@+id/simpleSend"/>
+    </androidx.cardview.widget.CardView>
+</androidx.appcompat.widget.LinearLayoutCompat>

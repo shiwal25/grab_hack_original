@@ -1,0 +1,23 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Base.Theme.HackON" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Customize your light theme here. -->
+        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+    </style>
+
+    <style name="Theme.HackON" parent="Base.Theme.HackON" />
+
+    <style name="Theme.HackON.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="Theme.HackON.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="Theme.HackON.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+    <color name="toolbar_background_color">#136343</color>
+    <color name="background">#f5f2eb</color>
+    <color name="textColor">#000000</color>
+    <color name="messageColor">#d8fdd2</color>
+</resources>
+<!--    E7E7E7-->

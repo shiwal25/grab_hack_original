@@ -1,0 +1,12 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Base.Theme.HackON" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Customize your dark theme here. -->
+        <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
+    </style>
+    <color name="toolbar_background_color">#136343</color>
+    <color name="background">#0a0f13</color>
+    <color name="textColor">#FFFFFF</color>
+    <color name="messageColor">#134d37</color>
+</resources>
+<!--    333333-->
