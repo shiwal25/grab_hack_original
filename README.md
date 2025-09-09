@@ -83,7 +83,63 @@ Install requirements.txt
 
 <br />
 
+## 🛠️ Installation Steps
 
+1. **Navigate to the backend folder**
+```bash
+cd "Backend System"
+````
+
+2. **Install Node.js dependencies**
+
+```bash
+npm install
+```
+
+3. **Navigate to the agent folder**
+
+```bash
+cd ../"Last Mile Delivery Agent(langChain)"
+```
+
+4. **Create a Python virtual environment**
+
+```bash
+python -m venv venv
+```
+
+5. **Activate the virtual environment**
+
+```bash
+# Windows
+venv\Scripts\activate
+
+# macOS/Linux
+source venv/bin/activate
+```
+
+6. **Install Python dependencies**
+
+```bash
+pip install -r requirements.txt
+```
+
+7. **Set up environment variables in a `.env` file**
+
+```env
+GOOGLE_API_KEY=your_gemini_api_key
+GOOGLE_MAPS_API_KEY=your_google_maps_api_key
+FLIGHT_API_KEY=your_aviationstack_api_key
+Train_API_KEY=your_train_api_key
+BUS_API_KEY=your_bus_api_key
+```
+
+8. **Run the WebSocket server from the backend folder**
+
+```bash
+cd ../"Backend System"
+node server.js
+```
 
 <h2> TechStack </h2>
 
