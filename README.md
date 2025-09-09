@@ -68,57 +68,45 @@ Install requirements.txt
 </tr>
 </table>
 
-# 🚀 Local Development Setup
+<h2>🛠️ Installation Steps:</h2>
 
-Follow these steps to get **Project Synapse** running on your local machine:
+<p>1. Clone the repository</p>
 
----
+```
+git clone https://github.com/aerinpatel/Grab_hack_proj.git
+```
 
-## 1. 📥 Clone the Repository
+<p>2. Create a virtual environment</p>
 
-bash
-git clone https://github.com/shiwal25/grab_hack_original.git
-cd grab_hack_original
-
-<h3> 2. 🏃‍♂️ Start by Creating Virtual Environoment </h3>
-bash
+```
 python -m venv venv
+```
 
-<p> 4. Activate the virtual environment</p>
+<p>3. Activate the virtual environment</p>
 
+```
 venv\Scripts\activate
+```
 
-<h3> 5. 📦 Install Dependencies </h3>
+<p>4. Install dependencies</p>
 
+```
 pip install -r requirements.txt
+```
 
+<p>5. Set up environment variables</p>
 
-<h3>6. Set up environment variables(.env)</p>
-
+```
 GOOGLE_API_KEY=your_gemini_api_key
 GOOGLE_MAPS_API_KEY=your_google_maps_api_key
 FLIGHT_API_KEY=your_aviationstack_api_key
-Train_API_KEY = your_rapid_api_key
-BUS_API_KEY
+```
 
-<h3>6. Run the project</h3>
+<p>6. Run the project</p>
 
+```
 python main.py
-
-### 🔧 Available Scripts
-
-<div align="left">
-
-| Command | Description |
-|---------|-------------|
-| `npm run dev` | Start development server with hot reload |
-| `
-npm run build` | Build production-ready application |
-| `npm run preview` | Preview production build locally |
-| `npm run lint` | Run ESLint for code quality checks |
-
-</div> 
-
+```
 
 
 #### TechStacks Used by Us :
