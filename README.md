@@ -118,25 +118,17 @@ Git Config                    ░░░░░░░░░░░░░░░░�
   <h2> REFERENCES AND LINKS </h2>
   <table><tr><td valign="top" width="33%">
 
-### CONTRIBUTORS AND THEIR PROFILES 
+### MEET OUR TEAM 
 <!-- recent_releases starts -->
-[datasette-alerts-discord 0.1.0a1](https://github.com/datasette/datasette-alerts-discord/releases/tag/0.1.0a1) - 2025-08-19
+<h3> Amit </h3>
+<p align='center'>
+  
 
-[datasette-alerts 0.0.1a3](https://github.com/datasette/datasette-alerts/releases/tag/0.0.1a3) - 2025-08-19
-
-[llm-gemini 0.25](https://github.com/simonw/llm-gemini/releases/tag/0.25) - 2025-08-18
-
-[datasette-demo-dbs 0.1.1](https://github.com/datasette/datasette-demo-dbs/releases/tag/0.1.1) - 2025-08-14
-
-[llm 0.27.1](https://github.com/simonw/llm/releases/tag/0.27.1) - 2025-08-12
-
-[llm-anthropic 0.18](https://github.com/simonw/llm-anthropic/releases/tag/0.18) - 2025-08-05
-
-[datasette-queries 0.1.2](https://github.com/datasette/datasette-queries/releases/tag/0.1.2) - 2025-07-22
-
-[datasette-public 0.3a3](https://github.com/datasette/datasette-public/releases/tag/0.3a3) - 2025-07-22
-<!-- recent_releases ends -->
-More [recent releases](https://github.com/simonw/simonw/blob/main/releases.md)
+[![Twitter Badge](https://img.shields.io/badge/-@Amitrahar22-1ca0f1?style=flat-square&labelColor=1ca0f1&logo=twitter&logoColor=white&link=https://x.com/Amitrahar22)](https://x.com/Amitrahar22) 
+[![Linkedin Badge](https://img.shields.io/badge/-amitrahar122-blue?style=flat-square&logo=Linkedin&logoColor=white&link=https://www.linkedin.com/in/amitrahar122/)](https://www.linkedin.com/in/amitrahar122/)
+[![Github Badge](https://img.shields.io/badge/-@Amitrahar728-03a57a?style=flat-square&labelColor=000000&logo=Github&link=https://github.com/Amitrahar728)](https://github.com/Amitrahar728)
+[![Gmail Badge](https://img.shields.io/badge/-amitrahar728@gmail.com-c14438?style=flat-square&logo=Gmail&logoColor=white&link=mailto:amitrahar728@gmail.com)](mailto:amitrahar728@gmail.com)
+</p>
 </td><td valign="top" width="34%">
 
 ### RESEARCH PAPERS 
