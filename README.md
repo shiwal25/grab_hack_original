@@ -26,7 +26,8 @@
      <h3>3.) GrabFood: </h3><br>
      <img width="1904" height="1187" alt="diagram-export-09-09-2025-02_54_01" src="https://github.com/user-attachments/assets/5df82091-c267-4e9f-b061-cb815ff756f4" />
      <h3>4.) GarbMart: </h3><br>
-     <img width="3081" height="2865" alt="diagram-export-09-09-2025-02_55_56" src="https://github.com/user-attachments/assets/49f3ea33-10d9-4c9a-8251-915b13d0c195" />
+     <img width="2689" height="657" alt="diagram-export-09-09-2025-10_46_28" src="https://github.com/user-attachments/assets/81bb328d-f4a8-49c6-9435-946164c07736" />
+
 <br>
 <br />
 
@@ -69,7 +70,7 @@ Install requirements.txt
 </table>
 
 <h2>🛠️ Installation Steps:</h2>
-
+<!--START_SECTION:waka-->
 <p>1. Clone the repository</p>
 
 ```
@@ -107,98 +108,88 @@ FLIGHT_API_KEY=your_aviationstack_api_key
 ```
 python main.py
 ```
+<!--END_SECTION:waka-->
 
 
 #### TechStacks Used by Us :
 
 <!--START_SECTION:waka-->
 
-Java                      █████████████▓░░░░░░░░░   61.3 %
+Langchain                     ██████████████████▓░░░░░░   75.25 %
 
-Python                    █████▒░░░░░░░░░░░░░░░░░░░   35.9 %
+JSON                          █████▒░░░░░░░░░░░░░░░░░░░   21.23 %
 
-JavaScript                ▓░░░░░░░░░░░░░░░░░░░░░░░░   02.0 %
+TSConfig                      ▓░░░░░░░░░░░░░░░░░░░░░░░░   02.48 %
 
-HTML                      ▒░░░░░░░░░░░░░░░░░░░░░░░░   00.8 %
+Vue.js                        ▒░░░░░░░░░░░░░░░░░░░░░░░░   00.67 %
 
+Git Config                    ░░░░░░░░░░░░░░░░░░░░░░░░░   00.28 %
 
 <!--END_SECTION:waka-->
 
 <br />
-<p> need to be updated when we have pushed all code </p>
-
-<!--
-     This is the list of skills Used
--->
-
-### Main skills
-[![My Skills](https://skillicons.dev/icons?i=py,regex,github,git,mongodb,mysql,eclipse,java,spring,js,nodejs,react,express,jest,jenkins,cpp,cs,dotnet,html,css,bootstrap,pug,php,androidstudio,blender,ps,notion)](https://skillicons.dev)
-
-### Studying
-[![Learning](https://skillicons.dev/icons?i=aws,azure,ruby)](https://skillicons.dev)
 
 
 
-<h2> Architecture </h2>
-<img>
-  
-<h2> Work Demonstration </h2>
+<h2> Architecture & TechStack </h2>
 
-[https://youtu.be/XnvdVjgUIKA](https://youtu.be/XnvdVjgUIKA)
+<img width="1370" height="1131" alt="diagram-export-09-09-2025-20_07_19" src="https://github.com/user-attachments/assets/5b5c4eff-b06b-404e-8f5f-cb82b55a0110" />
 
 
-  <h2> REFERENCES AND LINKS </h2>
-  <table><tr><td valign="top" width="33%">
 
-### CONTRIBUTORS AND THEIR PROFILES 
-<!-- recent_releases starts -->
-[datasette-alerts-discord 0.1.0a1](https://github.com/datasette/datasette-alerts-discord/releases/tag/0.1.0a1) - 2025-08-19
 
-[datasette-alerts 0.0.1a3](https://github.com/datasette/datasette-alerts/releases/tag/0.0.1a3) - 2025-08-19
 
-[llm-gemini 0.25](https://github.com/simonw/llm-gemini/releases/tag/0.25) - 2025-08-18
 
-[datasette-demo-dbs 0.1.1](https://github.com/datasette/datasette-demo-dbs/releases/tag/0.1.1) - 2025-08-14
 
-[llm 0.27.1](https://github.com/simonw/llm/releases/tag/0.27.1) - 2025-08-12
+<h2> REFERENCES AND LINKS </h2>
 
-[llm-anthropic 0.18](https://github.com/simonw/llm-anthropic/releases/tag/0.18) - 2025-08-05
+<table>
+<tr>
+<td valign="top" width="50%">
 
-[datasette-queries 0.1.2](https://github.com/datasette/datasette-queries/releases/tag/0.1.2) - 2025-07-22
+### MEET OUR TEAM 
 
-[datasette-public 0.3a3](https://github.com/datasette/datasette-public/releases/tag/0.3a3) - 2025-07-22
-<!-- recent_releases ends -->
-More [recent releases](https://github.com/simonw/simonw/blob/main/releases.md)
-</td><td valign="top" width="34%">
+<!-- Amit -->
+<h2 align="left"> Amit </h2>  
 
-### RESEARCH PAPERS 
-<!-- blog starts -->
-[GPT-5 Thinking in ChatGPT (aka Research Goblin) is shockingly good at search](https://simonwillison.net/2025/Sep/6/research-goblin/) - 2025-09-06
+[![Twitter Badge](https://img.shields.io/badge/-Twitter-1ca0f1?style=flat-square&logo=x&logoColor=white&link=https://x.com/Amitrahar22)](https://x.com/Amitrahar22) 
+[![Linkedin Badge](https://img.shields.io/badge/-LinkedIn-blue?style=flat-square&logo=linkedin&logoColor=white&link=https://www.linkedin.com/in/amitrahar122/)](https://www.linkedin.com/in/amitrahar122/) <br>
+[![GitHub Badge](https://img.shields.io/badge/-GitHub-000000?style=flat-square&logo=github&logoColor=white&link=https://github.com/Amitrahar728)](https://github.com/Amitrahar728) 
+[![Gmail Badge](https://img.shields.io/badge/-Mail_ID-c14438?style=flat-square&logo=gmail&logoColor=white&link=mailto:amitrahar728@gmail.com)](mailto:amitrahar728@gmail.com)
 
-[V&A East Storehouse and Operation Mincemeat in London](https://simonwillison.net/2025/Aug/27/london-culture/) - 2025-08-27
+<!-- Shivam Agarwal -->
+<h2 align="left"> Shivam Agarwal </h2>  
 
-[The Summer of Johann: prompt injections as far as the eye can see](https://simonwillison.net/2025/Aug/15/the-summer-of-johann/) - 2025-08-15
+[![Twitter Badge](https://img.shields.io/badge/-Twitter-1ca0f1?style=flat-square&logo=x&logoColor=white&link=https://x.com/shivamag25?t=GzHmHZ3xRCDZRYLDo90udA&s=08)](https://x.com/shivamag25?t=GzHmHZ3xRCDZRYLDo90udA&s=08) 
+[![Linkedin Badge](https://img.shields.io/badge/-LinkedIn-blue?style=flat-square&logo=linkedin&logoColor=white&link=https://www.linkedin.com/in/shiwal25)](https://www.linkedin.com/in/shiwal25) <br>
+[![GitHub Badge](https://img.shields.io/badge/-GitHub-000000?style=flat-square&logo=github&logoColor=white&link=https://github.com/shiwal25)](https://github.com/shiwal25) 
+[![Gmail Badge](https://img.shields.io/badge/-Mail_ID-c14438?style=flat-square&logo=gmail&logoColor=white&link=mailto:25shivamagrawal@gmail.com)](mailto:25shivamagrawal@gmail.com)
 
-[Open weight LLMs exhibit inconsistent performance across providers](https://simonwillison.net/2025/Aug/15/inconsistent-performance/) - 2025-08-15
+<!-- Aerin Patel -->
+<h2 align="left"> Aerin Patel </h2>  
 
-[LLM 0.27, the annotated release notes: GPT-5 and improved tool calling](https://simonwillison.net/2025/Aug/11/llm-027/) - 2025-08-11
+[![Twitter Badge](https://img.shields.io/badge/-Twitter-1ca0f1?style=flat-square&logo=x&logoColor=white&link=https://x.com/Aerinpatel13)](https://x.com/Aerinpatel13) 
+[![Linkedin Badge](https://img.shields.io/badge/-LinkedIn-blue?style=flat-square&logo=linkedin&logoColor=white&link=https://www.linkedin.com/in/aerin-patel/)](https://www.linkedin.com/in/aerin-patel/) <br>
+[![GitHub Badge](https://img.shields.io/badge/-GitHub-000000?style=flat-square&logo=github&logoColor=white&link=https://github.com/aerinpatel)](https://github.com/aerinpatel) 
+[![Gmail Badge](https://img.shields.io/badge/-Mail_ID-c14438?style=flat-square&logo=gmail&logoColor=white&link=mailto:aerinpatel9@gmail.com)](mailto:aerinpatel9@gmail.com)
 
-[Qwen3-4B-Thinking: "This is art - pelicans don't ride bikes!"](https://simonwillison.net/2025/Aug/10/qwen3-4b/) - 2025-08-10
-<!-- blog ends -->
-More on [simonwillison.net](https://simonwillison.net/)
-</td><td valign="top" width="33%">
+</td>
 
-### API KEYS
-<!-- tils starts -->
+<td valign="top" width="50%">
 
-[TRAIN STATUS API KEY USED      (RAPID API) : ](https://rapidapi.com/rahilkhan224/api/indian-railway-irctc)
+### API KEYS  
 
-[FLIGHT STATUS API KEY USED     (AviationStack)](https://aviationstack.com/)
+[TRAIN STATUS API KEY USED      (RAPID API)](https://rapidapi.com/rahilkhan224/api/indian-railway-irctc)  
 
-[GOOGLE MAP API KEY USED        (GOOGLE MAPS)](https://developers.google.com/maps/documentation/javascript/get-api-key) 
+[FLIGHT STATUS API KEY USED     (AviationStack)](https://aviationstack.com/)  
 
-[LANGCHAIN GOOGLE GENAI         (GOOGLE GEMINI)](https://ai.google.dev/gemini-api/docs/api-key)
+[GOOGLE MAP API KEY USED        (GOOGLE MAPS)](https://developers.google.com/maps/documentation/javascript/get-api-key)  
 
-[BUS STATUS API KEY             (DATAMALL LANDTRANSPORT)](https://datamall.lta.gov.sg/content/datamall/en.html)
-<!-- tils ends -->
-</td></tr></table>
+[LANGCHAIN GOOGLE GENAI         (GOOGLE GEMINI)](https://ai.google.dev/gemini-api/docs/api-key)  
+
+[BUS STATUS API KEY             (DATAMALL LANDTRANSPORT)](https://datamall.lta.gov.sg/content/datamall/en.html)  
+
+</td>
+</tr>
+</table>
+
