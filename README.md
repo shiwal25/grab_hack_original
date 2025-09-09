@@ -1,4 +1,4 @@
-<a href="https://git.io/typing-svg"><img src="https://readme-typing-svg.demolab.com?font=Libertinus+Keyboard&size=17&pause=1000&color=F70C0C&background=FFFFFF00&center=true&width=480&lines=HEY+!+WELCOME+TO+OUR+PROJECT+" alt="Typing SVG" /></a>
+<!---<a href="https://git.io/typing-svg"><img src="https://readme-typing-svg.demolab.com?font=Libertinus+Keyboard&size=17&pause=1000&color=F70C0C&background=FFFFFF00&center=true&width=480&lines=HEY+!+WELCOME+TO+OUR+PROJECT+" alt="Typing SVG" /></a>---!>
 <h1 align="center" id="title_of_project">PROJECT SYNAPSE (TEAM HACKON)</h1>
 <img width="957" alt="Team-hackon-icon" src="https://github.com/user-attachments/assets/f423798c-1161-4c3b-b4c0-199e6d62c024">
 
@@ -8,10 +8,10 @@
 <table width="100%">
   <tr>
     <td align="left">
-      <img src="https://github.com/user-attachments/assets/88a45e11-061d-47c3-97f6-3ed01c20caae" alt="HackOn" width="180">
+      <h2>PROJECT SYNAPSE</h2>
     </td>
     <td align="right" valign="middle">
-      <h2>PROJECT SYNAPSE</h2>
+      <img src="https://github.com/user-attachments/assets/88a45e11-061d-47c3-97f6-3ed01c20caae" alt="HackOn" width="180">
     </td>
   </tr>
 </table>
@@ -23,75 +23,49 @@
      <h3> 2.) GrabCar: </h3> <br>
      <img width="1640" height="795" alt="diagram-export-9-9-2025-2_35_01-AM" src="https://github.com/user-attachments/assets/eddb65ea-996a-4b42-a856-4c180b52a79f" />
      <h3>3.) GrabFood: </h3><br>
-     <img width="1904" height="1187" alt="diagram-export-09-09-2025-02_54_01" src="https://github.com/user-attachments/assets/5df82091-c267-4e9f-b061-cb815ff756f4" />
+     <img width="1904" height="1187" alt="diagram-export-09-09-2025-02_54_01" src="https://github.com/user-attachments/assets/75e8536e-b643-425f-af93-ff6a78196597" />
      <h3>4.) GarbMart: </h3><br>
-     <img width="3081" height="2865" alt="diagram-export-09-09-2025-02_55_56" src="https://github.com/user-attachments/assets/49f3ea33-10d9-4c9a-8251-915b13d0c195" />
-
-    
-
-* 🐾 I’m looking to network and make friends here! <br><br>
-
-* 🌊 2023 Goals: Contribute more to Open Source projects <br><br>
-
-* ☕ Interest: Cats, Coffee, and Coding. <br><br>
-
-* :octocat: Hobbies: Sleeping, Anime/Manga, Gacha Games, Discord, and Reddit. <br><br>
-
-<h2>
-<h2>Description</h2>
-<br>
-<p id="description">
-Developed an asynchronous event-driven Python application that leverages LangChain Google Generative AI (Gemini) and Google Maps Platform to automate decision-making in two operational domains: GrabExpress: Handles delivery partner–recipient communication suggests safe drop-off locations finds secure lockers and processes recipient responses with LLM-based intent parsing. GrabCar: Monitors traffic between origin–destination calculates alternative optimal routes notifies passengers/drivers and checks live flight statuses for urgent trips. Key Features: Natural language classification of user scenarios into logistics or ride-hailing workflows. Prompt engineering for enhanced agent goals and precise LLM responses. Real-time geocoding routing and traffic analysis via Google Maps APIs. Flight status tracking using AviationStack API. Automated timeout handling for unresponsive users. Integrated with asynchronous coroutines for scalable concurrent API calls.</p>
-<h2>🧐 Features</h2>
-
-Here're some of the project's best features:
-
-*   AI-Powered Scenario Classification – Automatically classifies situations into GrabExpress (delivery) or GrabCar (ride-hailing) using Google Generative AI (Gemini).
-*   LLM-Enhanced Decision Making – Uses prompt-engineered Gemini responses to create actionable goals for agents.
-*   Real-Time Map Integration – Integrates Google Maps API for geocoding routing alternative path calculations and traffic-aware trip planning.
-*   Recipient Interaction Automation – Initiates chat with recipients suggests safe drop-off locations and locates nearby parcel lockers.
-*   Flight Status Tracking – Fetches real-time flight status from AviationStack API for urgent travel scenarios.
-*   Timeout Handling – Automatically proceeds with fallback actions if the recipient/passenger is unresponsive.
-*   Asynchronous & Scalable – Built with asyncio and aiohttp for concurrent non-blocking API calls.
-*   Customizable Agent Tools – Modular tool setup with LangChain making it easy to extend with new APIs or logic.
+     <img width="2689" height="657" alt="diagram-export-09-09-2025-10_46_28" src="https://github.com/user-attachments/assets/616e658a-8aa4-48b9-afa8-015d4e0cd5b2" />
 
 
 <br />
-<h2>🛠️ Installation Steps:</h2>
+<h3>🛠️ Installation Steps:</h3>
 
-<p>1. Clone the repository</p>
+<h3>1. Clone the repository</h3>
 
 ```
 git clone https://github.com/aerinpatel/Grab_hack_proj.git
 ```
 
-<p>2. Create a virtual environment</p>
+<h3>2. Create a virtual environment</h3>
 
 ```
 python -m venv venv
 ```
 
-<p>3. Activate the virtual environment</p>
+<h3>3. Activate the virtual environment</h3>
 
 ```
 venv\Scripts\activate
 ```
 
-<p>4. Install dependencies</p>
+<h3>4. Install dependencies</h3>
 
 ```
 pip install -r requirements.txt
 ```
 
-<p>5. Set up environment variables</p>
+<h3>5. Set up environment variables</h3>
 
 ```
 GOOGLE_API_KEY=your_gemini_api_key
 GOOGLE_MAPS_API_KEY=your_google_maps_api_key
 FLIGHT_API_KEY=your_aviationstack_api_key
+TRAIN_API_KEY = your_rapid_api_key
+BUS_API_KEY = your_landmall_api_key
 ```
 
-<p>6. Run the project</p>
+<h3>6. Run the project</h3>
 
 ```
 python main.py
@@ -118,15 +92,16 @@ Git Config                    ░░░░░░░░░░░░░░░░�
 <p> need to be updated when we have pushed all code </p>
 
 <!--
-     This is the list of my skills and tools I am studying!
+     This is the list of TechStacks We Used : 
 -->
-### Main skills
-[![My Skills](https://skillicons.dev/icons?i=py,regex,github,git,mongodb,mysql,eclipse,java,spring,js,nodejs,react,express,jest,jenkins,cpp,cs,dotnet,html,css,bootstrap,pug,php,androidstudio,blender,ps,notion)](https://skillicons.dev)
+### Agent Development 
+[![My Skills](https://skillicons.dev/icons?i=py,github,git,java,js,express,androidstudio)](https://skillicons.dev)
 
-### Studying
+### Android Development 
+[![Learning](https://skillicons.dev/icons?i=androidstudio,)](https://skillicons.dev)
+
+### Backend 
 [![Learning](https://skillicons.dev/icons?i=aws,azure,ruby)](https://skillicons.dev)
-
-
 
 <h2> Architecture </h2>
 
