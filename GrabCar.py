@@ -78,12 +78,19 @@ class WebsocketCallbackHandler(AsyncCallbackHandler):
 
     async def on_agent_action(self, action, **kwargs):
         try:
-            tool = getattr(action, "tool", str(action))
-            tool_input = getattr(action, "tool_input", "")
-            log = getattr(action, "log", "")
-            print(json.dumps({"type": "agent_event", "event": "agent_action", "tool": tool, "tool_input": tool_input, "log": str(log)}), flush=True)
+            tool = getattr(action, "tool", None) or str(action)
+            tool_input = getattr(action, "tool_input", None)
+            log = getattr(action, "log", None)
+            print(json.dumps({
+                "type": "agent_event",
+                "event": "agent_action",
+                "tool": tool,
+                "tool_input": tool_input,
+                "log": str(log)
+            }), flush=True)
         except Exception:
             pass
+
 
     async def on_agent_finish(self, finish, **kwargs):
         try:
@@ -123,9 +130,9 @@ class WebsocketCallbackHandler(AsyncCallbackHandler):
         except Exception:
             pass
 
-
 #For taking input with time limit from user  
 async def input_with_timeout(prompt: str, timeout: int) -> str:
+    global _prompt_target
     print(json.dumps({"type": "request_user_input", "prompt": prompt, "timeout": timeout, "target": _prompt_target}), flush=True)
     loop = asyncio.get_event_loop()
     future_input = loop.create_future()
@@ -405,30 +412,22 @@ async def check_train_status(train_number: str, departure_date: str) -> Dict[str
 
         scheduled = actual = None
 
-        # Match the station and get both scheduled and actual arrival + dates
         for station in stations:
             if station.get("stationCode") == last_crossed:
                 scheduled = station.get("arrivalTime")
                 actual = station.get("actual_arrival_time")
-                # scheduled_date = station.get("arrival_date") or departure_date
-                # actual_date = station.get("actual_arrival_date") or departure_date
                 break
 
-        # print(scheduled, actual)
-
-        # Updated delay calculation using full datetime
         from datetime import datetime, timedelta
 
         def calculate_delay(scheduled: str, actual: str) -> str:
             if not scheduled or not actual or scheduled == "--" or actual == "--":
                 return "UNKNOWN"
             try:
-                # Use today's date as fallback
                 today = datetime.today().strftime("%Y%m%d")
                 scheduled_dt = datetime.strptime(f"{today} {scheduled}", "%Y%m%d %H:%M")
                 actual_dt = datetime.strptime(f"{today} {actual}", "%Y%m%d %H:%M")
 
-                # Handle overnight case: actual before scheduled
                 if actual_dt < scheduled_dt:
                     actual_dt += timedelta(days=1)
 
@@ -446,7 +445,6 @@ async def check_train_status(train_number: str, departure_date: str) -> Dict[str
                 return "UNKNOWN"
 
         delay_status = calculate_delay(scheduled, actual)
-        # print(delay_status)
 
         src = stations[0].get("stationName") if stations else "UNKNOWN"
         dest = stations[-1].get("stationName") if stations else "UNKNOWN"
@@ -515,6 +513,7 @@ async def check_train_status_tool(pnr: str) -> str:
 
 
 def setup_agent() -> Any:
+    
     llm = GoogleGenerativeAI(model="gemini-1.5-flash", temperature=0)
     tools = [
         Tool(
@@ -672,18 +671,18 @@ async def transit_monitor_loop():
         await asyncio.sleep(TRANSIT_INTERVAL)
 
 async def run_grabcar_flow():
-    global orig_latlng, dest_latlng, mode_of_transport, pnr
+    global orig_latlng, dest_latlng, mode_of_transport, pnr, train_departure_date, _prompt_target
 
+    _prompt_target = "driver"
     origin_addr = await input_with_timeout("Driver, Enter your current address :\n>", 300)
     dest_addr = await input_with_timeout("Enter Customer's destination address :\n>", 300)
 
     mode_of_transport = (await input_with_timeout("Continuation mode at destination? (flight/train/other):\n> ", 60)).strip().lower() or "other"
     if mode_of_transport == "train":
-        global pnr, train_departure_date
         pnr = (await input_with_timeout("Enter Train number :\n> ", 60)).strip() or None
         train_departure_date = (await input_with_timeout("Enter train departure date (YYYYMMDD):\n> ", 60)).strip() or None
     elif mode_of_transport == "flight":
-        pnr= (await input_with_timeout("Enter ID of your flight for details :\n> ", 60)).strip() or None
+        pnr = (await input_with_timeout("Enter ID of your flight for details :\n> ", 60)).strip() or None
        
     else:    
         print(json.dumps({"type": "info", "message": "No transit monitoring will be done as this transit tool is not available right now"}), flush=True)

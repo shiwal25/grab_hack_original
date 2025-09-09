@@ -50,8 +50,10 @@ async def main():
         return
 
     if scenario.lower() == "grabexpress":
+        print(json.dumps({"event":scenario.lower()}))
         await run_grabexpress_flow_entry()
     elif scenario.lower() == "grabcar":
+        print(json.dumps({"event":scenario.lower()}))
         await run_grabcar_flow_entry()
     else:
         print(json.dumps({"type": "error", "message": "Could not classify scenario. Please try again."}), flush=True)

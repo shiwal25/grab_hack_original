@@ -143,7 +143,7 @@ async def contact_recipient_via_chat(message: str) -> str:
     recipient_reply = ""
     _prompt_target = "recipient"
     reply = (await input_with_timeout(
-        message + " \n [150s timeout]:\n> ",
+        message + " [150s timeout]:> ",
         150
     )).strip()
     _prompt_target = "driver"
@@ -173,7 +173,7 @@ async def perform_safe_drop_off_nearby(_input: str = "") -> str:
         otp = str(random.randint(1000, 9999))
         otp_message = f"An OTP has been sent to the provided phone number. Please enter the 4-digit OTP. 30 Sec time limit"
         print(json.dumps({"type": "info", "message": f"DEBUG: OTP for this attempt is {otp}"}), flush=True)
-        otp_input = await request_user_input(f"{otp_message}\n> ", 30)
+        otp_input = await request_user_input(f"{otp_message}> ", 30)
 
         if otp_input == otp:
             success_msg = f"Your parcel has been safely delivered to {name} (phone: {phone}). Thank you!"
@@ -224,7 +224,7 @@ async def perform_safe_drop_off(_input: str = "") -> str:
                 otp = str(random.randint(1000, 9999))
                 otp_message = f"An OTP has been sent to the provided phone number. Please enter the 4-digit OTP. 30 Sec time limit"
                 print(json.dumps({"type": "info", "message": f"DEBUG: OTP for this attempt is {otp}"}), flush=True)
-                otp_input = await request_user_input(f"{otp_message}\n> ", 30)
+                otp_input = await request_user_input(f"{otp_message}> ", 30)
 
                 if otp_input == otp:
                     success_msg = f"Your parcel has been safely delivered to {location} with {name} (phone: {phone}). Thank you!"
@@ -251,8 +251,8 @@ async def perform_locker_delivery(_input: str = "") -> str:
         print(json.dumps({"type": "info", "message": "No nearby parcel lockers found."}), flush=True)
         return "No lockers available."
 
-    list_msg = "Found nearby secure parcel lockers:\n" + "\n".join(f"{i+1}. {locker['name']} at {locker['address']}" for i, locker in enumerate(lockers))
-    select = await contact_recipient_via_chat(list_msg + "\nPlease select one by entering the number:")
+    list_msg = "Found nearby secure parcel lockers:" + "".join(f"{i+1}. {locker['name']} at {locker['address']}" for i, locker in enumerate(lockers))
+    select = await contact_recipient_via_chat(list_msg + "Please select one by entering the number:")
 
     if select == "Recipient is not replying":
         print(json.dumps({"type": "info", "message": "Recipient did not respond."}), flush=True)
@@ -286,7 +286,7 @@ def setup_agent():
     if not GOOGLE_MAPS_API_KEY:
         raise ValueError("GOOGLE_MAPS_API_KEY not found in env file")
 
-    llm = GoogleGenerativeAI(model="gemini-1.5-flash", temperature=0)
+    llm = GoogleGenerativeAI(model="gemini-2.5-flash", temperature=0)
     tools = [
         Tool(
             name="contact_recipient_via_chat",
