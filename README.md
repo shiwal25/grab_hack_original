@@ -29,50 +29,78 @@
 
 
 <br />
-<h3>🛠️ Installation Steps:</h3>
+<h2> PREREQUISTES</h2>
+<table align="center" width="100%">
+<tr>
+<td align="center" width="33%">
+�
+<br>
+<b>Node.js (v16.0+)</b>
+<br>
+<a href="https://nodejs.org/">Download here</a>
+</td>
+<td align="center" width="33%">
+�
+<br>
+<b>Install requirements.txt </b>
+<br>
+</td>
+<td align="center" width="33%">
+�
+<br>
+<b>Git</b>
+<br>
+<a href="https://git-scm.com/">Download here</a>
+</td>
+</tr>
+</table>
 
-<h3>1. Clone the repository</h3>
+<h2>🛠️ Installation Steps:</h2>
 
+<p>1. Clone the repository</p>
+<!--START_SECTION:waka-->
 ```
-git clone https://github.com/aerinpatel/Grab_hack_proj.git
+git clone https://github.com/shiwal25/grab_hack_original.git
 ```
 
-<h3>2. Create a virtual environment</h3>
+<!--END_SECTION:waka-->
+<p>2. Create a virtual environment</p>
 
 ```
 python -m venv venv
 ```
 
-<h3>3. Activate the virtual environment</h3>
+<p>3. Activate the virtual environment</p>
 
 ```
 venv\Scripts\activate
 ```
 
-<h3>4. Install dependencies</h3>
+<p>4. Install dependencies</p>
 
 ```
 pip install -r requirements.txt
 ```
 
-<h3>5. Set up environment variables</h3>
+<p>5. Set up environment variables</p>
 
 ```
-GOOGLE_API_KEY=your_gemini_api_key
-GOOGLE_MAPS_API_KEY=your_google_maps_api_key
-FLIGHT_API_KEY=your_aviationstack_api_key
+GOOGLE_API_KEY = your_gemini_api_key
+GOOGLE_MAPS_API_KEY = your_google_maps_api_key
+FLIGHT_API_KEY = your_aviationstack_api_key
 TRAIN_API_KEY = your_rapid_api_key
 BUS_API_KEY = your_landmall_api_key
 ```
 
-<h3>6. Run the project</h3>
+<p>6. Run the project</p>
 
 ```
 python main.py
 ```
 
 
-#### TechStacks Used by Us :
+
+<h2>GITHUB REPO CONFIGURATION</h2>
 
 <!--START_SECTION:waka-->
 ```
@@ -89,25 +117,48 @@ Git Config                    ░░░░░░░░░░░░░░░░�
 <!--END_SECTION:waka-->
 
 <br />
-<p> need to be updated when we have pushed all code </p>
-
+<h2> TECHSTACKS </h2>
 <!--
      This is the list of TechStacks We Used : 
 -->
 
-<div style="display: flex; align-items: flex-start;"> <h2>AGENT</h2><img src = "https://raw.githubusercontent.com/marwin1991/profile-technology-icons/refs/heads/main/icons/langchain_icon.png" width="65" height="65"  /><img src = "" /><img src = "" /><img src = "" /><img src="https://techstack-generator.vercel.app/github-icon.svg" alt="icon" width="65" height="65" /><img src ="https://raw.githubusercontent.com/marwin1991/profile-technology-icons/refs/heads/main/icons/websocket.png" width="60" height="60"/></div>
+<div style="display: flex; align-items: flex-start;"> <h3>AGENT</h3>
+<img width="65" height="65" alt="download" src="https://github.com/user-attachments/assets/5a1a1d79-75ae-4ca4-a0f4-d9a7c3cbf758" />
+<img src = "https://raw.githubusercontent.com/marwin1991/profile-technology-icons/refs/heads/main/icons/langchain_icon.png" width="65" height="65"/><span>  </span><img width="65" height="65" alt="download" src="https://github.com/user-attachments/assets/d578443e-1fc9-42d3-ac7a-c8e970e28d89" />
+<img width="65" height="65" alt="Google_Gemini_logo svg" src="https://github.com/user-attachments/assets/4751c221-7de2-4a83-8f05-d7c6f1b0d8f3" />
+<img src ="https://raw.githubusercontent.com/marwin1991/profile-technology-icons/refs/heads/main/icons/websocket.png" width="60" height="60"/>
+<img width="65" height="65" alt="download" src="https://github.com/user-attachments/assets/6273e3dd-abf5-4a30-9785-740d683dd2e5" />
+<img width="65" height="65" alt="download" src="https://github.com/user-attachments/assets/3f0b65c3-21e6-4397-9462-4b31964800b4" />
 
-<div style="display: flex; align-items: flex-start;"><h2>UI APPLICATION</h2><img src="https://techstack-generator.vercel.app/csharp-icon.svg" alt="icon" width="65" height="65" /></div>
-<div style="display: flex; align-items: flex-start;"><h2> BACKEND </h2><img src="https://raw.githubusercontent.com/marwin1991/profile-technology-icons/refs/heads/main/icons/javascript.png" alt="icon" width="65" height="65" /> <img src="	https://raw.githubusercontent.com/marwin1991/profile-technology-icons/refs/heads/main/icons/express.png" alt="icon" width="65" height="65" /> <img src="https://raw.githubusercontent.com/marwin1991/profile-technology-icons/refs/heads/main/icons/websocket.png" alt="icon" width="65" height="65" /> <img src="" alt="icon" width="65" height="65" /> <img src="" alt="icon" width="65" height="65" /> <img src="" alt="icon" width="65" height="65" /> <img src="" alt="icon" width="65" height="65" /> </div>
-<div style="display: flex; align-items: flex-start;"><h2> OTHER </h2><img src="https://raw.githubusercontent.com/marwin1991/profile-technology-icons/refs/heads/main/icons/github.png" width="65" height="65" /> <img src = "https://raw.githubusercontent.com/marwin1991/profile-technology-icons/refs/heads/main/icons/git.png"  width="65" height="65"/> <img src = "https://raw.githubusercontent.com/marwin1991/profile-technology-icons/refs/heads/main/icons/gitlab.png" width="65" height="65" /> <img src = "https://raw.githubusercontent.com/marwin1991/profile-technology-icons/refs/heads/main/icons/visual_studio_code.png"  width="65" height="65"/> <img src = "https://raw.githubusercontent.com/marwin1991/profile-technology-icons/refs/heads/main/icons/android_studio.png"  width="65" height="65" /> <img src = ""  width="65" height="65" /><img src = "" width="65" height="65" /><img src = ""  width="65" height="65" /></div> 
-### Agent Development 
-[![My Skills](https://skillicons.dev/icons?i=py,github,git,java,js,express,androidstudio)](https://skillicons.dev)
 
-### Android Development 
-[![Learning](https://skillicons.dev/icons?i=androidstudio,)](https://skillicons.dev)
+</div>
 
-### Backend 
-[![Learning](https://skillicons.dev/icons?i=aws,azure,ruby)](https://skillicons.dev)
+
+
+<div style="display: flex; align-items: flex-start;"><h3>UI APPLICATION</h3><img src="https://raw.githubusercontent.com/marwin1991/profile-technology-icons/refs/heads/main/icons/java.png" alt="icon" width="65" height="65" /> <img src="https://raw.githubusercontent.com/marwin1991/profile-technology-icons/refs/heads/main/icons/kotlin.png" alt="icon" width="65" height="65" /> <img src="https://raw.githubusercontent.com/marwin1991/profile-technology-icons/refs/heads/main/icons/android.png" alt="icon" width="65" height="65" /> <img src="https://raw.githubusercontent.com/marwin1991/profile-technology-icons/refs/heads/main/icons/firebase.png" alt="icon" width="65" height="65" /> <img src="https://raw.githubusercontent.com/marwin1991/profile-technology-icons/refs/heads/main/icons/material_ui.png" alt="icon" width="65" height="65" /></div>
+
+
+
+<div style="display: flex; align-items: flex-start;"><h3> BACKEND </h3>
+<img src="https://raw.githubusercontent.com/marwin1991/profile-technology-icons/refs/heads/main/icons/javascript.png" alt="icon" width="65" height="65" /> 
+<img src="https://raw.githubusercontent.com/marwin1991/profile-technology-icons/refs/heads/main/icons/express.png" alt="icon" width="65" height="65" /> 
+<img width="65" height="65" alt="download" src="https://github.com/user-attachments/assets/4ea1bb4c-b009-4bae-89a1-a224f5e57ffa"/>
+<img src="https://raw.githubusercontent.com/marwin1991/profile-technology-icons/refs/heads/main/icons/websocket.png" alt="icon" width="65" height="65" /> 
+<img width="65" height="65" alt="download" src="https://github.com/user-attachments/assets/710372e1-363d-40a9-acd9-f75801ac8d95"/>
+<img width="65" height="65" alt="images" src="https://github.com/user-attachments/assets/56443b95-5c2e-469a-a2e3-c140e68fa592" />
+
+
+
+<div style="display: flex; align-items: flex-start;"><h3> OTHER </h3>
+<img src="https://techstack-generator.vercel.app/github-icon.svg" alt="icon" width="65" height="65" />
+<img src = "https://raw.githubusercontent.com/marwin1991/profile-technology-icons/refs/heads/main/icons/git.png"  width="65" height="65"/>
+<img src = "https://raw.githubusercontent.com/marwin1991/profile-technology-icons/refs/heads/main/icons/gitlab.png" width="65" height="65" /> 
+<img src = "https://raw.githubusercontent.com/marwin1991/profile-technology-icons/refs/heads/main/icons/visual_studio_code.png"  width="65" height="65"/> 
+<img src = "https://raw.githubusercontent.com/marwin1991/profile-technology-icons/refs/heads/main/icons/android_studio.png"  width="65" height="65" /> 
+<img src = "https://raw.githubusercontent.com/marwin1991/profile-technology-icons/refs/heads/main/icons/gcp.png"  width="65" height="65" />
+
+
+
 
 <h2> Architecture </h2>
 
@@ -121,7 +172,7 @@ Git Config                    ░░░░░░░░░░░░░░░░�
 [https://youtu.be/XnvdVjgUIKA](https://youtu.be/XnvdVjgUIKA)
 
 
-  <h2> REFERENCES AND LINKS </h2>
+  <h2> LINKS AND CONNECT  </h2>
   <table><tr><td valign="top" width="33%">
 
 ### MEET OUR TEAM 
@@ -130,39 +181,33 @@ Git Config                    ░░░░░░░░░░░░░░░░�
 <p align='center'>
   
 
-[![Twitter Badge](https://img.shields.io/badge/-@Amitrahar22-1ca0f1?style=flat-square&labelColor=1ca0f1&logo=twitter&logoColor=white&link=https://x.com/Amitrahar22)](https://x.com/Amitrahar22) 
-[![Linkedin Badge](https://img.shields.io/badge/-amitrahar122-blue?style=flat-square&logo=Linkedin&logoColor=white&link=https://www.linkedin.com/in/amitrahar122/)](https://www.linkedin.com/in/amitrahar122/)
-[![Github Badge](https://img.shields.io/badge/-@Amitrahar728-03a57a?style=flat-square&labelColor=000000&logo=Github&link=https://github.com/Amitrahar728)](https://github.com/Amitrahar728)
-[![Gmail Badge](https://img.shields.io/badge/-amitrahar728@gmail.com-c14438?style=flat-square&logo=Gmail&logoColor=white&link=mailto:amitrahar728@gmail.com)](mailto:amitrahar728@gmail.com)
+[![Twitter Badge](https://img.shields.io/badge/-Twitter-1ca0f1?style=flat-square&labelColor=1ca0f1&logo=twitter&logoColor=white&link=https://x.com/Amitrahar22)](https://x.com/Amitrahar22) 
+[![Linkedin Badge](https://img.shields.io/badge/-Linkedin-blue?style=flat-square&logo=Linkedin&logoColor=white&link=https://www.linkedin.com/in/amitrahar122/)](https://www.linkedin.com/in/amitrahar122/)
+[![Github Badge](https://img.shields.io/badge/-Github-03a57a?style=flat-square&labelColor=000000&logo=Github&link=https://github.com/Amitrahar728)](https://github.com/Amitrahar728)<br>
+[![Gmail Badge](https://img.shields.io/badge/-Gmail_amitrahar728@gmail.com-c14438?style=flat-square&logo=Gmail&logoColor=white&link=mailto:amitrahar728@gmail.com)](mailto:amitrahar728@gmail.com)
 </p>
 <br>
+<h3> Aerin Patel </h3>
+<p align='center'>
+
+
+[![Twitter Badge](https://img.shields.io/badge/-Twitter-1ca0f1?style=flat-square&labelColor=1ca0f1&logo=twitter&logoColor=white&link=https://x.com/Aerinpatel13)](https://x.com/Aerinpatel13) 
+[![Linkedin Badge](https://img.shields.io/badge/-Linkedin-blue?style=flat-square&logo=Linkedin&logoColor=white&link=https://www.linkedin.com/in/aerin-patel/)](https://www.linkedin.com/in/aerin-patel/)
+[![Github Badge](https://img.shields.io/badge/-Github-03a57a?style=flat-square&labelColor=000000&logo=Github&link=https://github.com/aerinpatel)](https://github.com/aerinpatel)<br>
+[![Gmail Badge](https://img.shields.io/badge/-Gmail_aerinpatel9@gmail.com-c14438?style=flat-square&logo=Gmail&logoColor=white&link=mailto:aerinpatel9@gmail.com)](mailto:aerinpatel9@gmail.com)
+</p>
 <br>
+
+<h3> Shivam Agarwal </h3>
 <p align='center'>
   
 
-[![Twitter Badge](https://img.shields.io/badge/-@Aerinpatel13-1ca0f1?style=flat-square&labelColor=1ca0f1&logo=twitter&logoColor=white&link=https://x.com/Aerinpatel13)](https://x.com/Aerinpatel13) 
-[![Linkedin Badge](https://img.shields.io/badge/-aerin-patel-blue?style=flat-square&logo=Linkedin&logoColor=white&link=https://www.linkedin.com/in/aerin-patel/)](https://www.linkedin.com/in/aerin-patel/)
-[![Github Badge](https://img.shields.io/badge/-@aerinpatel-03a57a?style=flat-square&labelColor=000000&logo=Github&link=https://github.com/aerinpatel)](https://github.com/aerinpatel)
-[![Gmail Badge](https://img.shields.io/badge/-aerinpatel9@gmail.com -c14438?style=flat-square&logo=Gmail&logoColor=white&link=mailto:aerinpatel9@gmail.com )](mailto:aerinpatel9@gmail.com )
+[![Twitter Badge](https://img.shields.io/badge/-Twitter-1ca0f1?style=flat-square&labelColor=1ca0f1&logo=twitter&logoColor=white&link=https://x.com/Aerinpatel13)](https://x.com/Aerinpatel13) 
+[![Linkedin Badge](https://img.shields.io/badge/-Linkedin-blue?style=flat-square&logo=Linkedin&logoColor=white&link=linkedin.com/in/shiwal25)](linkedin.com/in/shiwal25)
+[![Github Badge](https://img.shields.io/badge/-Github-03a57a?style=flat-square&labelColor=000000&logo=Github&link=github.com/shiwal25)](github.com/shiwal25)<br>
+[![Gmail Badge](https://img.shields.io/badge/-Gmail_Shivam_Agarwal-c14438?style=flat-square&logo=Gmail&logoColor=white&link=mailto:25shivamagarwal@gmail.com)](mailto:25shivamagarwal@gmail.com)
 </p>
 </td><td valign="top" width="34%">
-
-### RESEARCH PAPERS 
-<!-- blog starts -->
-[GPT-5 Thinking in ChatGPT (aka Research Goblin) is shockingly good at search](https://simonwillison.net/2025/Sep/6/research-goblin/) - 2025-09-06
-
-[V&A East Storehouse and Operation Mincemeat in London](https://simonwillison.net/2025/Aug/27/london-culture/) - 2025-08-27
-
-[The Summer of Johann: prompt injections as far as the eye can see](https://simonwillison.net/2025/Aug/15/the-summer-of-johann/) - 2025-08-15
-
-[Open weight LLMs exhibit inconsistent performance across providers](https://simonwillison.net/2025/Aug/15/inconsistent-performance/) - 2025-08-15
-
-[LLM 0.27, the annotated release notes: GPT-5 and improved tool calling](https://simonwillison.net/2025/Aug/11/llm-027/) - 2025-08-11
-
-[Qwen3-4B-Thinking: "This is art - pelicans don't ride bikes!"](https://simonwillison.net/2025/Aug/10/qwen3-4b/) - 2025-08-10
-<!-- blog ends -->
-More on [simonwillison.net](https://simonwillison.net/)
-</td><td valign="top" width="33%">
 
 ### API KEYS
 <!-- tils starts -->
