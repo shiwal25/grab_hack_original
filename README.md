@@ -94,6 +94,12 @@ Git Config                    ░░░░░░░░░░░░░░░░�
 <!--
      This is the list of TechStacks We Used : 
 -->
+
+<div style="display: flex; align-items: flex-start;"> <h2>AGENT</h2><img src = "https://raw.githubusercontent.com/marwin1991/profile-technology-icons/refs/heads/main/icons/langchain_icon.png" width="65" height="65"  /><img src = "" /><img src = "" /><img src = "" /><img src="https://techstack-generator.vercel.app/github-icon.svg" alt="icon" width="65" height="65" /><img src ="https://raw.githubusercontent.com/marwin1991/profile-technology-icons/refs/heads/main/icons/websocket.png" width="60" height="60"/></div>
+
+<div style="display: flex; align-items: flex-start;"><h2>UI APPLICATION</h2><img src="https://techstack-generator.vercel.app/csharp-icon.svg" alt="icon" width="65" height="65" /></div>
+<div style="display: flex; align-items: flex-start;"><h2> BACKEND </h2><img src="https://raw.githubusercontent.com/marwin1991/profile-technology-icons/refs/heads/main/icons/javascript.png" alt="icon" width="65" height="65" /> <img src="	https://raw.githubusercontent.com/marwin1991/profile-technology-icons/refs/heads/main/icons/express.png" alt="icon" width="65" height="65" /> <img src="https://raw.githubusercontent.com/marwin1991/profile-technology-icons/refs/heads/main/icons/websocket.png" alt="icon" width="65" height="65" /> <img src="" alt="icon" width="65" height="65" /> <img src="" alt="icon" width="65" height="65" /> <img src="" alt="icon" width="65" height="65" /> <img src="" alt="icon" width="65" height="65" /> </div>
+<div style="display: flex; align-items: flex-start;"><h2> OTHER </h2><img src="https://raw.githubusercontent.com/marwin1991/profile-technology-icons/refs/heads/main/icons/github.png" width="65" height="65" /> <img src = "https://raw.githubusercontent.com/marwin1991/profile-technology-icons/refs/heads/main/icons/git.png"  width="65" height="65"/> <img src = "https://raw.githubusercontent.com/marwin1991/profile-technology-icons/refs/heads/main/icons/gitlab.png" width="65" height="65" /> <img src = "https://raw.githubusercontent.com/marwin1991/profile-technology-icons/refs/heads/main/icons/visual_studio_code.png"  width="65" height="65"/> <img src = "https://raw.githubusercontent.com/marwin1991/profile-technology-icons/refs/heads/main/icons/android_studio.png"  width="65" height="65" /> <img src = ""  width="65" height="65" /><img src = "" width="65" height="65" /><img src = ""  width="65" height="65" /></div> 
 ### Agent Development 
 [![My Skills](https://skillicons.dev/icons?i=py,github,git,java,js,express,androidstudio)](https://skillicons.dev)
 
@@ -128,6 +134,16 @@ Git Config                    ░░░░░░░░░░░░░░░░�
 [![Linkedin Badge](https://img.shields.io/badge/-amitrahar122-blue?style=flat-square&logo=Linkedin&logoColor=white&link=https://www.linkedin.com/in/amitrahar122/)](https://www.linkedin.com/in/amitrahar122/)
 [![Github Badge](https://img.shields.io/badge/-@Amitrahar728-03a57a?style=flat-square&labelColor=000000&logo=Github&link=https://github.com/Amitrahar728)](https://github.com/Amitrahar728)
 [![Gmail Badge](https://img.shields.io/badge/-amitrahar728@gmail.com-c14438?style=flat-square&logo=Gmail&logoColor=white&link=mailto:amitrahar728@gmail.com)](mailto:amitrahar728@gmail.com)
+</p>
+<br>
+<br>
+<p align='center'>
+  
+
+[![Twitter Badge](https://img.shields.io/badge/-@Aerinpatel13-1ca0f1?style=flat-square&labelColor=1ca0f1&logo=twitter&logoColor=white&link=https://x.com/Aerinpatel13)](https://x.com/Aerinpatel13) 
+[![Linkedin Badge](https://img.shields.io/badge/-aerin-patel-blue?style=flat-square&logo=Linkedin&logoColor=white&link=https://www.linkedin.com/in/aerin-patel/)](https://www.linkedin.com/in/aerin-patel/)
+[![Github Badge](https://img.shields.io/badge/-@aerinpatel-03a57a?style=flat-square&labelColor=000000&logo=Github&link=https://github.com/aerinpatel)](https://github.com/aerinpatel)
+[![Gmail Badge](https://img.shields.io/badge/-aerinpatel9@gmail.com -c14438?style=flat-square&logo=Gmail&logoColor=white&link=mailto:aerinpatel9@gmail.com )](mailto:aerinpatel9@gmail.com )
 </p>
 </td><td valign="top" width="34%">
 
