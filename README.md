@@ -1,4 +1,4 @@
-<!---<a href="https://git.io/typing-svg"><img src="https://readme-typing-svg.demolab.com?font=Libertinus+Keyboard&size=17&pause=1000&color=F70C0C&background=FFFFFF00&center=true&width=480&lines=HEY+!+WELCOME+TO+OUR+PROJECT+" alt="Typing SVG" /></a>--!>
+
 
 <h1 align="center" id="title_of_project">PROJECT SYNAPSE (TEAM HACKON)</h1>
 <img width="957" alt="Team-hackon-icon" src="https://github.com/user-attachments/assets/f423798c-1161-4c3b-b4c0-199e6d62c024">
@@ -19,14 +19,25 @@
 
 
 <br>
-     <h3> 1.) GrabExpress: </h3> <br>
-     <img width="2647" height="334" alt="diagram-export-9-9-2025-1_58_06-AM" src="https://github.com/user-attachments/assets/13e65670-b050-419d-ac47-d2a00f33adee" /><br>     
-     <h3> 2.) GrabCar: </h3> <br>
-     <img width="1640" height="795" alt="diagram-export-9-9-2025-2_35_01-AM" src="https://github.com/user-attachments/assets/eddb65ea-996a-4b42-a856-4c180b52a79f" />
-     <h3>3.) GrabFood: </h3><br>
-     <img width="1904" height="1187" alt="diagram-export-09-09-2025-02_54_01" src="https://github.com/user-attachments/assets/5df82091-c267-4e9f-b061-cb815ff756f4" />
-     <h3>4.) GarbMart: </h3><br>
-     <img width="2689" height="657" alt="diagram-export-09-09-2025-10_46_28" src="https://github.com/user-attachments/assets/81bb328d-f4a8-49c6-9435-946164c07736" />
+     <h3> 1.) GrabExpress: </h3>
+     
+![WhatsApp Image 2025-09-10 at 01 22 33_8a08a736](https://github.com/user-attachments/assets/6b1a9256-f6d7-4486-a3ab-816e95089cf4)
+
+<br>
+     <h3> 2.) GrabCar: </h3> 
+     
+![WhatsApp Image 2025-09-10 at 01 22 09_57f56b8c](https://github.com/user-attachments/assets/445ba615-dffb-4727-a0c5-5364c21b2f20)
+
+
+
+<br>
+     <h3>3.) GrabFood: </h3>
+<img width="1806" height="822" alt="diagram-export-9-9-2025-10_35_51-PM" src="https://github.com/user-attachments/assets/9c6fa852-2610-4385-980b-acec04a065c1" />
+<br>
+     <h3>4.) GarbMart: </h3>
+<img width="1461" height="705" alt="diagram-export-9-9-2025-11_07_21-PM" src="https://github.com/user-attachments/assets/ddf09f04-da84-4f8d-a6f0-55f042b51df8" />
+
+
 
 <br>
 <br />
@@ -69,70 +80,25 @@ Install requirements.txt
 </tr>
 </table>
 
-<h2>🛠️ Installation Steps:</h2>
-<!--START_SECTION:waka-->
-<p>1. Clone the repository</p>
-
-```
-git clone https://github.com/aerinpatel/Grab_hack_proj.git
-```
-
-<p>2. Create a virtual environment</p>
-
-```
-python -m venv venv
-```
-
-<p>3. Activate the virtual environment</p>
-
-```
-venv\Scripts\activate
-```
-
-<p>4. Install dependencies</p>
-
-```
-pip install -r requirements.txt
-```
-
-<p>5. Set up environment variables</p>
-
-```
-GOOGLE_API_KEY=your_gemini_api_key
-GOOGLE_MAPS_API_KEY=your_google_maps_api_key
-FLIGHT_API_KEY=your_aviationstack_api_key
-```
-
-<p>6. Run the project</p>
-
-```
-python main.py
-```
-<!--END_SECTION:waka-->
-
-
-#### TechStacks Used by Us :
-
-<!--START_SECTION:waka-->
-
-Langchain                     ██████████████████▓░░░░░░   75.25 %
-
-JSON                          █████▒░░░░░░░░░░░░░░░░░░░   21.23 %
-
-TSConfig                      ▓░░░░░░░░░░░░░░░░░░░░░░░░   02.48 %
-
-Vue.js                        ▒░░░░░░░░░░░░░░░░░░░░░░░░   00.67 %
-
-Git Config                    ░░░░░░░░░░░░░░░░░░░░░░░░░   00.28 %
-
-<!--END_SECTION:waka-->
 
 <br />
 
 
 
-<h2> Architecture & TechStack </h2>
+<h2> TechStack </h2>
 
+<!--START_SECTION:waka-->
+```text
+Java         ██████████████▓░░░░░░░░░░    61.3%
+Python       ████████▒░░░░░░░░░░░░░░░░   35.9%
+JavaScript   ▓░░░░░░░░░░░░░░░░░░░░░░░░    2.0%
+HTML         ▒░░░░░░░░░░░░░░░░░░░░░░░░    0.8%
+```
+
+<!--END_SECTION:waka-->
+<br>
+<h2> Architecture </h2>
+<br>
 <img width="1370" height="1131" alt="diagram-export-09-09-2025-20_07_19" src="https://github.com/user-attachments/assets/5b5c4eff-b06b-404e-8f5f-cb82b55a0110" />
 
 
