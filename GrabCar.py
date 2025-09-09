@@ -673,7 +673,7 @@ async def transit_monitor_loop():
 async def run_grabcar_flow():
     global orig_latlng, dest_latlng, mode_of_transport, pnr, train_departure_date, _prompt_target
 
-    _prompt_target = "driver"
+    _prompt_target = "recipent"
     origin_addr = await input_with_timeout("Driver, Enter your current address :\n>", 300)
     dest_addr = await input_with_timeout("Enter Customer's destination address :\n>", 300)
 
