@@ -15,6 +15,8 @@ from dataclasses import dataclass, field
 from typing import Any, Dict, List, Optional, Tuple
 from math import radians, sin, cos, sqrt, atan2
 from datetime import datetime
+import sys
+from langchain.callbacks.base import AsyncCallbackHandler
 warnings.filterwarnings("ignore", category=DeprecationWarning)
 
 
@@ -59,21 +61,101 @@ dest_latlng: Optional[Tuple[float, float]] = None
 mode_of_transport: str = "other"  
 pnr: Optional[str] = None
 
-#For taking input with time limit from user  
-def input_with_timeout(prompt: str, timeout: int) -> str:
-    result = {"reply": ""}
-    def _get():
-        try:
-            result["reply"] = input(prompt)
-        except EOFError:
-            result["reply"] = ""
-    t = threading.Thread(target=_get, daemon=True)
-    t.start()
-    t.join(timeout)
-    if t.is_alive():
-        return ""
-    return result["reply"].strip()
+_prompt_target = "driver"
 
+class WebsocketCallbackHandler(AsyncCallbackHandler):
+    async def on_chain_start(self, serialized, inputs, **kwargs):
+        try:
+            print(json.dumps({"type": "agent_event", "event": "chain_start", "inputs": inputs}), flush=True)
+        except Exception:
+            pass
+
+    async def on_chain_end(self, outputs, **kwargs):
+        try:
+            print(json.dumps({"type": "agent_event", "event": "chain_end", "outputs": outputs}), flush=True)
+        except Exception:
+            pass
+
+    async def on_agent_action(self, action, **kwargs):
+        try:
+            tool = getattr(action, "tool", None) or str(action)
+            tool_input = getattr(action, "tool_input", None)
+            log = getattr(action, "log", None)
+            print(json.dumps({
+                "type": "agent_event",
+                "event": "agent_action",
+                "tool": tool,
+                "tool_input": tool_input,
+                "log": str(log)
+            }), flush=True)
+        except Exception:
+            pass
+
+
+    async def on_agent_finish(self, finish, **kwargs):
+        try:
+            rv = getattr(finish, "return_values", finish)
+            print(json.dumps({"type": "agent_event", "event": "agent_finish", "result": rv}), flush=True)
+        except Exception:
+            pass
+
+    async def on_tool_start(self, serialized, input_str, **kwargs):
+        try:
+            name = serialized.get("name") if isinstance(serialized, dict) else str(serialized)
+            print(json.dumps({"type": "agent_event", "event": "tool_start", "tool": name, "input": input_str}), flush=True)
+        except Exception:
+            pass
+
+    async def on_tool_end(self, output, **kwargs):
+        try:
+            print(json.dumps({"type": "agent_event", "event": "tool_end", "output": output}), flush=True)
+        except Exception:
+            pass
+
+    async def on_llm_start(self, serialized, prompts, **kwargs):
+        try:
+            print(json.dumps({"type": "agent_event", "event": "llm_start", "prompts": prompts}), flush=True)
+        except Exception:
+            pass
+
+    async def on_llm_new_token(self, token, **kwargs):
+        try:
+            print(json.dumps({"type": "agent_event", "event": "llm_token", "token": token}), flush=True)
+        except Exception:
+            pass
+
+    async def on_llm_end(self, response, **kwargs):
+        try:
+            print(json.dumps({"type": "agent_event", "event": "llm_end", "response": response}), flush=True)
+        except Exception:
+            pass
+
+#For taking input with time limit from user  
+async def input_with_timeout(prompt: str, timeout: int) -> str:
+    global _prompt_target
+    print(json.dumps({"type": "request_user_input", "prompt": prompt, "timeout": timeout, "target": _prompt_target}), flush=True)
+    loop = asyncio.get_event_loop()
+    future_input = loop.create_future()
+
+    def read_stdin():
+        for line in sys.stdin:
+            try:
+                data = json.loads(line.strip())
+                if "input" in data:
+                    if not future_input.done():
+                        loop.call_soon_threadsafe(future_input.set_result, data["input"])
+                    break
+            except Exception:
+                continue
+
+    thread = threading.Thread(target=read_stdin, daemon=True)
+    thread.start()
+
+    try:
+        user_input = await asyncio.wait_for(future_input, timeout=timeout)
+        return user_input.strip()
+    except asyncio.TimeoutError:
+        return ""
 
 def changetime(seconds: int) -> str: #== for changing time in sec,  m and hours
     m, s = divmod(int(seconds), 60)
@@ -121,7 +203,7 @@ async def directions_google(session: aiohttp.ClientSession, origin: Tuple[float,
     async with session.get(url, params=params) as resp: # ye get request bhej rha hai url and params ko
         data = await resp.json()
         if data.get("status") != "OK":
-            raise ValueError(f"Directions API (google map api key is not working correctly) error: {data.get('status')}: {data.get('error_message')}") 
+            raise ValueError(f"Directions API (google map api key is not working correctly) error: {data.get('status')}: {data.get('error_message')}")
         return data # in case the status is OK 
 
 # parsing the json file return by directions_google function(bcz that function is returning us a json with a lot of legs ).
@@ -226,8 +308,8 @@ async def calculate_alternative_route(_input: str = "") -> str:
                 f"{i}. {r['route_name']} — {fmt_distance(dist)}, ETA {changetime(eta)} ({delta_str})"
             )
 
-        lines.append("\nReply with a number to switch, or type 'stay' to keep current route.")
-        return "\n".join(lines)
+        lines.append("Reply with a number to switch, or type 'stay' to keep current route.")
+        return "".join(lines)
 
 async def set_current_route(selection: str) -> str:
     global current_route_index
@@ -255,9 +337,9 @@ async def set_current_route(selection: str) -> str:
 
 async def notify_passenger_and_driver(message: str) -> str:
 
-    print(message)
+    print(json.dumps({"type": "info", "message": message}), flush=True)
 
-    reply = input_with_timeout("Your reply (number/stay) [120s timeout]:\n> ", 120)
+    reply = await input_with_timeout("Your reply (number/stay) [120s timeout]:> ", 120)
     return reply or ""
 
 def safe_get(d, *keys, default=0):
@@ -271,7 +353,7 @@ def safe_get(d, *keys, default=0):
 
 async def check_flight_status(flight_number: str) -> Optional[Dict[str, Any]]:
     if not FLIGHT_API_KEY:
-        print("Flight API key missing! Check if your key is valid or if the API limit is exceeded.")
+        print(json.dumps({"type": "error", "message": "Flight API key missing! Check if your key is valid or if the API limit is exceeded."}), flush=True)
         return None
 
     url = "https://api.aviationstack.com/v1/flights"
@@ -302,7 +384,7 @@ async def check_flight_status(flight_number: str) -> Optional[Dict[str, Any]]:
                 }
 
     except Exception as e:
-        print(f"Error occurred in flight status check: {e}")
+        print(json.dumps({"type": "error", "message": f"Error occurred in flight status check: {e}"}), flush=True)
         return None
 
 async def check_train_status(train_number: str, departure_date: str) -> Dict[str, Any]:
@@ -310,7 +392,7 @@ async def check_train_status(train_number: str, departure_date: str) -> Dict[str
     Fetch train status and calculate delay for the last crossed station.
     """
     if not TRAIN_API_KEY:
-        print("Train Rapid API key missing! Check if key is valid or API limit exceeded.")
+        print(json.dumps({"type": "error", "message": "Train Rapid API key missing! Check if key is valid or API limit exceeded."}), flush=True)
         return None
 
     url = f"https://indian-railway-irctc.p.rapidapi.com/api/trains/v1/train/status?departure_date={departure_date}&isH5=true&client=web&train_number={train_number}"
@@ -330,30 +412,22 @@ async def check_train_status(train_number: str, departure_date: str) -> Dict[str
 
         scheduled = actual = None
 
-        # Match the station and get both scheduled and actual arrival + dates
         for station in stations:
             if station.get("stationCode") == last_crossed:
                 scheduled = station.get("arrivalTime")
                 actual = station.get("actual_arrival_time")
-                # scheduled_date = station.get("arrival_date") or departure_date
-                # actual_date = station.get("actual_arrival_date") or departure_date
                 break
 
-        print(scheduled, actual)
-
-        # Updated delay calculation using full datetime
         from datetime import datetime, timedelta
 
         def calculate_delay(scheduled: str, actual: str) -> str:
             if not scheduled or not actual or scheduled == "--" or actual == "--":
                 return "UNKNOWN"
             try:
-                # Use today's date as fallback
                 today = datetime.today().strftime("%Y%m%d")
                 scheduled_dt = datetime.strptime(f"{today} {scheduled}", "%Y%m%d %H:%M")
                 actual_dt = datetime.strptime(f"{today} {actual}", "%Y%m%d %H:%M")
 
-                # Handle overnight case: actual before scheduled
                 if actual_dt < scheduled_dt:
                     actual_dt += timedelta(days=1)
 
@@ -367,17 +441,16 @@ async def check_train_status(train_number: str, departure_date: str) -> Dict[str
                     return f"Ahead by {abs(delta_min)} min"
 
             except Exception as e:
-                print(f"[calculate_delay] Exception: {e}")
+                print(json.dumps({"type": "error", "message": f"[calculate_delay] Exception: {e}"}), flush=True)
                 return "UNKNOWN"
 
         delay_status = calculate_delay(scheduled, actual)
-        print(delay_status)
 
         src = stations[0].get("stationName") if stations else "UNKNOWN"
         dest = stations[-1].get("stationName") if stations else "UNKNOWN"
 
         return {
-            "train_number": train_number,
+            "train_num": train_number,
             "source": src,
             "destination": dest,
             "last_crossed_station": last_crossed,
@@ -388,7 +461,7 @@ async def check_train_status(train_number: str, departure_date: str) -> Dict[str
         }
 
     except Exception as e:
-        print(f"Error occurred in train status check: {e}")
+        print(json.dumps({"type": "error", "message": f"Error occurred in train status check: {e}"}), flush=True)
         return None
 
 
@@ -424,23 +497,23 @@ async def notify_passenger_and_driver_tool(message: str) -> str:
 
 async def check_flight_status_tool(pnr: str) -> str:
     st = await check_flight_status(pnr)
-    delay = st.get("delay_min")
+    if not st:
+        return "Flight status unavailable"
+    delay = st.get("delay_departure_min")
     if st.get("status") == "DELAYED" and delay:
         return f"Flight delayed by ~{delay} min."
     return f"Flight status: {st.get('status')}"
 
 
 async def check_train_status_tool(pnr: str) -> str:
-    st = await check_train_status(pnr)
-    delay = st.get("delay_min")
-    if st.get("status") == "DELAYED" and delay:
-        return f"Train delayed by ~{delay} min."
-    return f"Train status: {st.get('status')}"
-
-
+    st = await check_train_status(pnr, train_departure_date or "20250906")
+    if not st:
+        return "Train status unavailable"
+    return f"Train status: {st.get('delay_status')}"
 
 
 def setup_agent() -> Any:
+    
     llm = GoogleGenerativeAI(model="gemini-1.5-flash", temperature=0)
     tools = [
         Tool(
@@ -500,7 +573,8 @@ def setup_agent() -> Any:
         llm,
         agent=AgentType.ZERO_SHOT_REACT_DESCRIPTION,
         verbose=True,
-        return_intermediate_steps=True
+        return_intermediate_steps=True,
+        callbacks=[WebsocketCallbackHandler()]
     )
     return agent
 
@@ -514,84 +588,32 @@ async def traffic_monitor_loop():
             if det["has_obstruction"] and det["severity"] == "MAJOR":
                 chosen = all_routes[current_route_index]
                 msg = (
-                    "Alert: We detected a major obstruction on your current route.\n"
-                    f"Route distance: {fmt_distance(chosen['distance_m'])}\n"
-                    f"Normal time (no traffic): {changetime(det['base_sec'])}\n"
-                    f"Current ETA (with obstruction): {changetime(det['eta_sec'])}\n"
-                    f"Delay: {changetime(det['delta_sec'])}\n"
-                    f"Severity: {det['severity']}\n"
+                    "Alert: We detected a major obstruction on your current route."
+                    f"Route distance: {fmt_distance(chosen['distance_m'])}"
+                    f"Normal time (no traffic): {changetime(det['base_sec'])}"
+                    f"Current ETA (with obstruction): {changetime(det['eta_sec'])}"
+                    f"Delay: {changetime(det['delta_sec'])}"
+                    f"Severity: {det['severity']}"
                 )
                 menu = await calculate_alternative_route("")
-                reply = await notify_passenger_and_driver(msg + "\n" + menu)
+                reply = await notify_passenger_and_driver(msg + "" + menu)
                 if reply:
-                    print(await set_current_route(reply))
+                    print(json.dumps({"type": "info", "message": await set_current_route(reply)}), flush=True)
             else:
                 chosen = all_routes[current_route_index]
                 ping = (
-                    f"Route clear.\n"
-                    f"Distance: {fmt_distance(chosen['distance_m'])}\n"
-                    f"ETA (with traffic): {changetime(chosen['duration_with_traffic_seconds'])}\n"
+                    f"Route clear."
+                    f"Distance: {fmt_distance(chosen['distance_m'])}"
+                    f"ETA (with traffic): {changetime(chosen['duration_with_traffic_seconds'])}"
                 )
-                print(ping)
+                print(json.dumps({"type": "info", "message": ping}), flush=True)
 
         except Exception as e:
-            print(f"[traffic_monitor_loop] Warning: {e}")
+            print(json.dumps({"type": "error", "message": f"[traffic_monitor_loop] Warning: {e}"}), flush=True)
 
         await asyncio.sleep(TRAFFIC_INTERVAL)
 
 
-# async def transit_monitor_loop():
-#     global trip_active, first_train_check, first_flight_check ,train_departure_date
-#     if mode_of_transport not in {"flight", "train"} or not pnr:
-#         return
-
-#     while trip_active:
-#         try:
-#             if mode_of_transport == "flight":
-#                 st = await check_flight_status(pnr)
-#                 if st:
-#                     if first_flight_check:
-#                         print(f" Flight {safe_get(st, 'flight_number')} ({safe_get(st, 'airline')}) is scheduled.")
-#                         delay_dep = safe_get(st, "delay_departure_min")
-#                         delay_arr = safe_get(st, "delay_arrival_min")
-#                         if delay_dep or delay_arr:
-#                             print(f"Flight delayed by ~{delay_dep or 0} min on departure, ~{delay_arr or 0} min on arrival")
-#                         else:
-#                             print("Flight is on time")
-#                         first_flight_check = False
-#                     else:
-#                         status = safe_get(st, "status", default="On time")
-#                         delay = safe_get(st, "delay_departure_min", default=0)
-#                         if status.upper() == "DELAYED" and delay:
-#                             print(f"Flight update: delayed by ~{delay} min")
-#                         else:
-#                             print(f"Flight update: {status}")
-
-#                 else:
-#                     print("Flight update unavailable at the moment.")
-
-#             elif mode_of_transport == "train":
-#                 train_number = pnr
-#                 departure_date = train_departure_date
-#                 if not departure_date:
-#                     departure_date = "20250906"  # fallback default or could skip this check
-#                 st = await check_train_status(train_number,departure_date)  # adapt function to take two params if needed
-#                 if st:
-#                     if first_train_check:
-#                         print(f" Train number : ({safe_get(st, 'train_number')})")
-#                         print(f"From {safe_get(st, 'source')} to {safe_get(st, 'destination')}")
-#                         print(f"Currently at : {safe_get(st, 'last_crossed_station')}")
-#                         print(f"Current delay : ~{safe_get(st,'difference')}")
-#                         first_train_check = False
-#                     else:
-#                         print(f"Currently at : {safe_get(st, 'last_crossed_station')}")
-#                         print(f"Current delay : ~{safe_get(st,'station_actual_arrival')} - {safe_get(st,'station_scheduled_arrival')}")
-#                 else:
-#                     print("Train update unavailable at the moment.")
-#         except Exception as e:
-#             print(f"Some error in transit_monitor_loop: {e}")
-
-#         await asyncio.sleep(TRANSIT_INTERVAL)
 async def transit_monitor_loop():
     """
     Monitors flight/train status periodically during the trip.
@@ -607,23 +629,23 @@ async def transit_monitor_loop():
                 st = await check_flight_status(pnr)
                 if st:
                     if first_flight_check:
-                        print(f" Flight {st.get('flight_number')} ({st.get('airline')}) is scheduled.")
+                        print(json.dumps({"type": "info", "message": f" Flight {st.get('flight_number')} ({st.get('airline')}) is scheduled."}), flush=True)
                         delay_dep = st.get("delay_departure_min", 0)
                         delay_arr = st.get("delay_arrival_min", 0)
                         if delay_dep or delay_arr:
-                            print(f"Flight delayed by ~{delay_dep} min on departure, ~{delay_arr} min on arrival")
+                            print(json.dumps({"type": "info", "message": f"Flight delayed by ~{delay_dep} min on departure, ~{delay_arr} min on arrival"}), flush=True)
                         else:
-                            print("Flight is on time")
+                            print(json.dumps({"type": "info", "message": "Flight is on time"}), flush=True)
                         first_flight_check = False
                     else:
                         status = st.get("status", "On time")
                         delay = st.get("delay_departure_min", 0)
                         if status.upper() == "DELAYED" and delay:
-                            print(f"Flight update: delayed by ~{delay} min")
+                            print(json.dumps({"type": "info", "message": f"Flight update: delayed by ~{delay} min"}), flush=True)
                         else:
-                            print(f"Flight update: {status}")
+                            print(json.dumps({"type": "info", "message": f"Flight update: {status}"}), flush=True)
                 else:
-                    print("Flight update unavailable at the moment.")
+                    print(json.dumps({"type": "info", "message": "Flight update unavailable at the moment."}), flush=True)
 
             elif mode_of_transport == "train":
                 train_number = pnr
@@ -631,39 +653,39 @@ async def transit_monitor_loop():
                 st = await check_train_status(train_number, departure_date)
                 if st:
                     if first_train_check:
-                        print(f" Train number: {st['train_number']}")
-                        print(f"From {st['source']} to {st['destination']}")
-                        print(f"Currently at: {st['last_crossed_station']}")
-                        print(f"Current delay: ~{st['delay_status']}")
+                        print(json.dumps({"type": "info", "message": f" Train number: {st['train_num']}"}), flush=True)
+                        print(json.dumps({"type": "info", "message": f"From {st['source']} to {st['destination']}"}), flush=True)
+                        print(json.dumps({"type": "info", "message": f"Currently at: {st['last_crossed_station']}"}), flush=True)
+                        print(json.dumps({"type": "info", "message": f"Current delay: ~{st['delay_status']}"}), flush=True)
                         first_train_check = False
                     else:
-                        print(f"Currently at: {st['last_crossed_station']}")
-                        print(f"Scheduled arrival: {st['scheduled_arrival']}, Actual arrival: {st['actual_arrival']}")
-                        print(f"Current delay: ~{st['delay_status']}")
+                        print(json.dumps({"type": "info", "message": f"Currently at: {st['last_crossed_station']}"}), flush=True)
+                        print(json.dumps({"type": "info", "message": f"Scheduled arrival: {st['scheduled_arrival']}, Actual arrival: {st['actual_arrival']}"}), flush=True)
+                        print(json.dumps({"type": "info", "message": f"Current delay: ~{st['delay_status']}"}), flush=True)
                 else:
-                    print("Train update unavailable at the moment.")
+                    print(json.dumps({"type": "info", "message": "Train update unavailable at the moment."}), flush=True)
 
         except Exception as e:
-            print(f"Some error in transit_monitor_loop: {e}")
+            print(json.dumps({"type": "error", "message": f"Some error in transit_monitor_loop: {e}"}), flush=True)
 
         await asyncio.sleep(TRANSIT_INTERVAL)
 
 async def run_grabcar_flow():
-    global orig_latlng, dest_latlng, mode_of_transport, pnr
+    global orig_latlng, dest_latlng, mode_of_transport, pnr, train_departure_date, _prompt_target
 
-    origin_addr = input("Driver, Enter your current address :\n>")
-    dest_addr = input("Enter Customer's destination address :\n> ")
+    _prompt_target = "recipient"
+    origin_addr = await input_with_timeout("Driver, Enter your current address :>", 300)
+    dest_addr = await input_with_timeout("Enter Customer's destination address :>", 300)
 
-    mode_of_transport = input("Continuation mode at destination? (flight/train/other):\n> ").strip().lower() or "other"
+    mode_of_transport = (await input_with_timeout("Continuation mode at destination? (flight/train/other):> ", 60)).strip().lower() or "other"
     if mode_of_transport == "train":
-        global pnr, train_departure_date
-        pnr = input("Enter Train number :\n> ").strip() or None
-        train_departure_date = input("Enter train departure date (YYYYMMDD):\n> ").strip() or None
+        pnr = (await input_with_timeout("Enter Train number :> ", 60)).strip() or None
+        train_departure_date = (await input_with_timeout("Enter train departure date (YYYYMMDD):> ", 60)).strip() or None
     elif mode_of_transport == "flight":
-        pnr= input("Enter ID of your flight for details :\n> ").strip() or None
+        pnr = (await input_with_timeout("Enter ID of your flight for details :> ", 60)).strip() or None
        
     else:    
-        print("No transit monitoring will be done as this transit tool is not available right now")
+        print(json.dumps({"type": "info", "message": "No transit monitoring will be done as this transit tool is not available right now"}), flush=True)
 
     async with aiohttp.ClientSession() as session:
         orig_lat, orig_lng = await changetolatlang(session, origin_addr)
@@ -675,7 +697,7 @@ async def run_grabcar_flow():
     async with aiohttp.ClientSession() as session:
         routes = await get_routes(session, orig_latlng, dest_latlng, include_alternatives=True)
     if not routes:
-        print("Sorry we are unable to find any routes. Exiting....")
+        print(json.dumps({"type": "error", "message": "Sorry we are unable to find any routes. Exiting...."}), flush=True)
         return
 
     global all_routes, current_route_index
@@ -683,19 +705,19 @@ async def run_grabcar_flow():
     current_route_index = 0
 
     chosen = routes[current_route_index]
-    print(
+    print(json.dumps({"type": "info", "message": (
         f"Initial route selected: {chosen['route_name']}, "
         f"Distance {fmt_distance(chosen['distance_m'])}, "
         f"ETA {changetime(chosen['duration_with_traffic_seconds'])}."
-    )
+    )}), flush=True)
     check_status = asyncio.create_task(traffic_monitor_loop())
     event_task = asyncio.create_task(transit_monitor_loop())
 
     try:
-        print("\nMonitoring started. Press Ctrl+C to stop.\n")
+        print(json.dumps({"type": "info", "message": "Monitoring started. Press Ctrl+C to stop."}), flush=True)
         await asyncio.gather(check_status, event_task)
-    except KeyboardInterrupt:
-        print("\nStopping monitors...")
+    except asyncio.CancelledError:
+        pass
     finally:
         global trip_active
         trip_active = False
